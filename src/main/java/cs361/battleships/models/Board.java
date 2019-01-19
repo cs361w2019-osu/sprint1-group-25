@@ -33,7 +33,22 @@ public class Board {
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
 		// TODO Implement
-		return false;
+		boolean shipPlaced = false;
+		int shipLength = 0;
+		List<Square> shipSquares;
+
+		if (ship.getKind() == "minesweeper") {
+			shipLength = 2;
+		} else if (ship.getKind() == "destroyer") {
+			shipLength = 3;
+		} else if (ship.getKind() == "battleship") {
+			shipLength = 4;
+		}
+
+		
+
+
+		return shipPlaced;
 	}
 
 	/*
