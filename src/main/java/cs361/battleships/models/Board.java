@@ -33,19 +33,38 @@ public class Board {
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
 		// TODO Implement
-		boolean shipPlaced = false;
+		boolean shipPlaced = true;
 		int shipLength = 0;
 		List<Square> shipSquares;
 
-		if (ship.getKind() == "minesweeper") {
+		if (ship.getKind() == "MINESWEEPER") {
 			shipLength = 2;
-		} else if (ship.getKind() == "destroyer") {
+		} else if (ship.getKind() == "DESTROYER") {
 			shipLength = 3;
-		} else if (ship.getKind() == "battleship") {
+		} else if (ship.getKind() == "BATTLESHIP") {
 			shipLength = 4;
 		}
 
-		
+		if (isVertical) {
+			for (int i = x; i < shipLength; i++) {
+				if (i > 10) {
+					shipPlaced = false;
+				} else {
+					Square shipSquare = new Square(i, y);
+					shipSquares.add(shipSquare);
+				}
+			}
+		} else {
+			for (int j = ((int)y - 65); j < shipLength; j++) {
+				if (j > 10) {
+					shipPlaced = false;
+				} else {
+					char newChar = (char)(j + 65);
+					Square shipSquare = new Square(x, newChar);
+					shipSquares.add(shipSquare);
+				}
+			}
+		}
 
 
 		return shipPlaced;
