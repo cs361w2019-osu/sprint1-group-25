@@ -20,8 +20,17 @@ public class Ship {
 		this.kind = kind;
 	}
 
+	public String getKind(){
+		return kind;
+	}
+
 	public List<Square> getOccupiedSquares() {
 		//TODO implement
 		return occupiedSquares;
 	}
+
+	public void setOccupiedSquares(List occupiedSquares) {
+		this.occupiedSquares = occupiedSquares;
+	}
+
 }
