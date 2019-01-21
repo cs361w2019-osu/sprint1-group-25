@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Board {
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
+	public boolean m_placed = false;
+	public boolean d_placed = false;
+	public boolean b_placed = false;
+
 	public Board() {
 		// TODO Implement
 	}
@@ -16,8 +17,27 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		// TODO Implement
-		return false;
+		if (ship.getKind().equals("MINESWEEPER")) {
+			if (this.m_placed) {
+				return false;
+			}
+			this.m_placed = true;
+		}
+
+		if (ship.getKind().equals("DESTROYER")) {
+			if (this.d_placed) {
+				return false;
+			}
+			this.d_placed = true;
+		}
+
+		if (ship.getKind().equals("BATTLESHIP")) {
+			if (this.b_placed) {
+				return false;
+			}
+			this.b_placed = true;
+		}
+		return true;
 	}
 
 	/*

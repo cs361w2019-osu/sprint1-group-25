@@ -16,7 +16,6 @@ public class Ship {
 	}
 
 	public Ship(String kind) {
-		//TODO implement
 		this.kind = kind;
 	}
 
@@ -25,7 +24,6 @@ public class Ship {
 	}
 
 	public List<Square> getOccupiedSquares() {
-		//TODO implement
 		return occupiedSquares;
 	}
 
