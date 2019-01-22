@@ -54,8 +54,8 @@ public class Board {
 			if (i > 10) {
 				return false;
 			}
-			Square s = new Square(i, y);
-			occupiedSquares.add(s);
+			int j = (int)y - 65;
+			occupiedSquares.add(boardSquares.get(j * 10 + i));
 		}
 		new_ship.setOccupiedSquares(occupiedSquares);
 
@@ -91,8 +91,8 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Result attack(int x, char y) {
-		Square location = new Square(x, y);
-		Result a = new Result(location);
+		int y_idx = (int)y - 65;
+		Result a = new Result(boardSquares.get(y_idx * 10 + x));
 		return a;
 	}
 
