@@ -21,6 +21,7 @@ public class Game {
 	 */
     public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
+        System.out.println(successful);
         if (!successful)
             return false;
 
@@ -45,8 +46,6 @@ public class Game {
 
         Result opponentAttackResult;
         do {
-            // AI does random attacks, so it might attack the same spot twice
-            // let it try until it gets it right
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
         } while(opponentAttackResult.getResult() != INVALID);
 

@@ -11,21 +11,13 @@ public class Board {
 	private int maxRows = 10;
 	private int maxCols = 10;
 
-	private List<Square> boardSquares;
 	private List<Ship> ships;
 	private List<Result> attacks;
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
-		// Create a bunch of new square objects via loop, and store them in a list.
-		boardSquares = new ArrayList<Square>();
-		for (int i = 1; i <= maxRows; i++) {
-			for (int j = 0; j < maxCols; j++) {
-				Square loopSquare = new Square(i, (char)(j + 65));
-				this.boardSquares.add(loopSquare);
-			}
-		}
+		ships =  new ArrayList<Ship>();
 	}
 
 	/*
@@ -38,30 +30,6 @@ public class Board {
 		// Set shipLength according to ship type
 		if (ship.getKind().equals("MINESWEEPER")) {
 			shipLength = 2;
-		}
-		if (ship.getKind().equals("DESTROYER")) {
-			shipLength = 3;
-		}
-		if (ship.getKind().equals("BATTLESHIP")) {
-			shipLength = 4;
-		}
-
-		// Make a new ship object and fill its occupiedSquares
-		List<Square> occupiedSquares = new ArrayList<Square>();
-		Ship new_ship = new Ship();
-
-		for (int i = x; i < shipLength; i++) {
-			if (i > 10) {
-				return false;
-			}
-			int j = (int)y - 65;
-			occupiedSquares.add(boardSquares.get(j * 10 + i));
-		}
-		new_ship.setOccupiedSquares(occupiedSquares);
-
-
-		// Check if this ship kind has been placed before
-		if (ship.getKind().equals("MINESWEEPER")) {
 			if (this.m_placed) {
 				return false;
 			}
@@ -69,6 +37,7 @@ public class Board {
 		}
 
 		if (ship.getKind().equals("DESTROYER")) {
+			shipLength = 3;
 			if (this.d_placed) {
 				return false;
 			}
@@ -76,10 +45,63 @@ public class Board {
 		}
 
 		if (ship.getKind().equals("BATTLESHIP")) {
+			shipLength = 4;
 			if (this.b_placed) {
 				return false;
 			}
 			this.b_placed = true;
+		}
+
+		Ship new_ship = new Ship();
+		List<Square> occupiedSquares = new ArrayList<Square>();
+
+		// Make sure ship is in bounds and doesn't overlap
+		if (!isVertical) {
+			if (x > (10 - shipLength) || x < 0 || (int)y > 75 || (int)y < 65) {
+				return false;
+			}
+			System.out.println("OKKKK");
+			System.out.println(ships.size());
+
+			// For all ships
+			for (int i = 0; i < ships.size(); i++) {
+				// For all occupied squares
+				for (int j = 0; i < ships.get(i).getOccupiedSquares().size(); j++) {
+					for (int k = 0; k < shipLength; k++) {
+						// Check if every square of the new ship overlaps with a previously placed ship
+						if (ships.get(i).getOccupiedSquares().get(j).getRow() == (x + k) && ships.get(i).getOccupiedSquares().get(j).getColumn() == y) {
+							return false;
+						}
+					}
+				}
+			}
+
+			// Set the occupied squares for the new ship
+			for (int i = 0; i < shipLength; i++) {
+				Square s = new Square(x + i, y);
+				occupiedSquares.add(s);
+			}
+			new_ship.setOccupiedSquares(occupiedSquares);
+
+		} else {
+			if (x > 10 || x < 0 || (int)y > (75 - shipLength) || y < 65) {
+				return false;
+			}
+			for (int i = 0; i < ships.size(); i++) {
+				for (int j = 0; i < ships.get(i).getOccupiedSquares().size(); j++) {
+					for (int k = 0; k < shipLength; k++) {
+						if (ships.get(i).getOccupiedSquares().get(j).getColumn() == (char)((int)y + k) || ships.get(i).getOccupiedSquares().get(j).getRow() == x) {
+							return false;
+						}
+					}
+				}
+			}
+			// Set the occupied squares for the new ship
+			for (int i = 0; i < shipLength; i++) {
+				Square s = new Square(x, (char)((int)y + i));
+				occupiedSquares.add(s);
+			}
+			new_ship.setOccupiedSquares(occupiedSquares);
 		}
 
 		// Add new ship to the board's ship list
@@ -92,7 +114,8 @@ public class Board {
 	 */
 	public Result attack(int x, char y) {
 		int y_idx = (int)y - 65;
-		Result a = new Result(boardSquares.get(y_idx * 10 + x));
+		Square s = new Square(x, y);
+		Result a = new Result(s);
 		return a;
 	}
 
