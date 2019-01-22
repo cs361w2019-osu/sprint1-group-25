@@ -1,5 +1,7 @@
 package cs361.battleships.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.*;
 
 public class Board {
@@ -11,86 +13,53 @@ public class Board {
 	private int maxRows = 10;
 	private int maxCols = 10;
 
-	private List<Ship> ships;
-	private List<Result> attacks;
+	@JsonProperty private List<Ship> ships;
+	@JsonProperty private List<Result> attacks;
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
-		ships =  new ArrayList<Ship>();
+		ships = new ArrayList<Ship>();
 	}
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		boolean shipPlaced = true;
+		System.out.print("Place ship starts with ");
+		System.out.print(x);
+		System.out.print(",");
+		System.out.println((int)y-65);
 		int shipLength = 0;
 
 		// Set shipLength according to ship type
 		if (ship.getKind().equals("MINESWEEPER")) {
 			shipLength = 2;
-			if (this.m_placed) {
-				return false;
-			}
-			this.m_placed = true;
 		}
 
 		if (ship.getKind().equals("DESTROYER")) {
 			shipLength = 3;
-			if (this.d_placed) {
-				return false;
-			}
-			this.d_placed = true;
 		}
 
 		if (ship.getKind().equals("BATTLESHIP")) {
 			shipLength = 4;
-			if (this.b_placed) {
-				return false;
-			}
-			this.b_placed = true;
 		}
 
 		Ship new_ship = new Ship();
 		List<Square> occupiedSquares = new ArrayList<Square>();
 
 		// Make sure ship is in bounds and doesn't overlap
-		if (!isVertical) {
-			if (x > (10 - shipLength) || x < 0 || (int)y > 75 || (int)y < 65) {
-				return false;
-			}
-			System.out.println("OKKKK");
-			System.out.println(ships.size());
-
-			// For all ships
-			for (int i = 0; i < ships.size(); i++) {
-				// For all occupied squares
-				for (int j = 0; i < ships.get(i).getOccupiedSquares().size(); j++) {
-					for (int k = 0; k < shipLength; k++) {
-						// Check if every square of the new ship overlaps with a previously placed ship
-						if (ships.get(i).getOccupiedSquares().get(j).getRow() == (x + k) && ships.get(i).getOccupiedSquares().get(j).getColumn() == y) {
-							return false;
-						}
-					}
-				}
-			}
-
-			// Set the occupied squares for the new ship
-			for (int i = 0; i < shipLength; i++) {
-				Square s = new Square(x + i, y);
-				occupiedSquares.add(s);
-			}
-			new_ship.setOccupiedSquares(occupiedSquares);
-
-		} else {
+		if (!isVertical) { // Horizontal
 			if (x > 10 || x < 0 || (int)y > (75 - shipLength) || y < 65) {
 				return false;
 			}
+			// For all ships
 			for (int i = 0; i < ships.size(); i++) {
-				for (int j = 0; i < ships.get(i).getOccupiedSquares().size(); j++) {
+				// For all occupied squares
+				for (int j = 0; j < ships.get(i).getOccupiedSquares().size(); j++) {
 					for (int k = 0; k < shipLength; k++) {
-						if (ships.get(i).getOccupiedSquares().get(j).getColumn() == (char)((int)y + k) || ships.get(i).getOccupiedSquares().get(j).getRow() == x) {
+						// Check if every square of the new ship overlaps with a previously placed ship
+						if (ships.get(i).getOccupiedSquares().get(j).getRow() == x && ships.get(i).getOccupiedSquares().get(j).getColumn() == (char)((int)y + k)) {
 							return false;
 						}
 					}
@@ -102,6 +71,53 @@ public class Board {
 				occupiedSquares.add(s);
 			}
 			new_ship.setOccupiedSquares(occupiedSquares);
+			new_ship.getOccupiedSquares().get(0).getColumn();
+
+		} else { // Vertical
+			if (x > (10 - shipLength) || x < 0 || (int)y > 74 || (int)y < 65) {
+				return false;
+			}
+			// For all ships
+			for (int i = 0; i < ships.size(); i++) {
+				// For all occupied squares
+				for (int j = 0; j < ships.get(i).getOccupiedSquares().size(); j++) {
+					for (int k = 0; k < shipLength; k++) {
+						// Check if every square of the new ship overlaps with a previously placed ship
+						if (ships.get(i).getOccupiedSquares().get(j).getColumn() == y && ships.get(i).getOccupiedSquares().get(j).getRow() == (x + k)) {
+							return false;
+						}
+					}
+				}
+			}
+			// Set the occupied squares for the new ship
+			for (int i = 0; i < shipLength; i++) {
+				Square s = new Square(x + i, y);
+				occupiedSquares.add(s);
+			}
+			new_ship.setOccupiedSquares(occupiedSquares);
+		}
+
+		// Make sure ship cant get placed twice
+		if (ship.getKind().equals("MINESWEEPER")) {
+			if (this.m_placed) {
+				System.out.println("already placed");
+				return false;
+			}
+			this.m_placed = true;
+		}
+		if (ship.getKind().equals("DESTROYER")) {
+			if (this.d_placed) {
+				System.out.println("already placed");
+				return false;
+			}
+			this.d_placed = true;
+		}
+		if (ship.getKind().equals("BATTLESHIP")) {
+			if (this.b_placed) {
+				System.out.println("already placed");
+				return false;
+			}
+			this.b_placed = true;
 		}
 
 		// Add new ship to the board's ship list
