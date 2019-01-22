@@ -11,7 +11,7 @@ public class Ship {
 	private String kind;
 
 	public Ship() {
-		occupiedSquares = new ArrayList<>();
+		occupiedSquares = new ArrayList<Square>();
 		kind = new String();
 	}
 
@@ -27,7 +27,7 @@ public class Ship {
 		return occupiedSquares;
 	}
 
-	public void setOccupiedSquares(List occupiedSquares) {
+	public void setOccupiedSquares(List<Square> occupiedSquares) {
 		this.occupiedSquares = occupiedSquares;
 	}
 
