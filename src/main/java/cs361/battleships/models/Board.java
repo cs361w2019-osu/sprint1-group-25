@@ -26,10 +26,6 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		System.out.print("Place ship starts with ");
-		System.out.print(x);
-		System.out.print(",");
-		System.out.println((int)y-65);
 		int shipLength = 0;
 
 		// Set shipLength according to ship type
