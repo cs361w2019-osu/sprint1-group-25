@@ -115,9 +115,33 @@ public class Board {
 	 */
 	public Result attack(int x, char y) {
 		int y_idx = (int)y - 65;
-		Square s = new Square(x, y);
-		Result a = new Result(s);
-		return a;
+		Square attackSquare = new Square(x, y);
+		Result attackResult = new Result(attackSquare);
+
+		boolean hit = false;
+
+		for ( Ship currentShip : this.ships ) {
+
+			for ( Square currentSquare : currentShip.getOccupiedSquares() ) {
+
+				if ( (currentSquare.getColumn() == x ) && ( currentSquare.getRow() == y ) ) {
+
+					hit = true;
+					attackResult.setResult(AtackStatus.HIT);
+					break;
+
+				}
+
+			}
+
+			if ( hit ) { break; }
+			attackResult.setResult(AtackStatus.MISS);
+
+		}
+
+		this.attacks.add(attackResult);
+
+		return attackResult;
 	}
 
 	public List<Ship> getShips() {
