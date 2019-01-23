@@ -26,20 +26,9 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		int shipLength = 0;
 
-		// Set shipLength according to ship type
-		if (ship.getKind().equals("MINESWEEPER")) {
-			shipLength = ship.getShipLength();
-		}
+		int shipLength = ship.getShipLength();
 
-		if (ship.getKind().equals("DESTROYER")) {
-			shipLength = ship.getShipLength();
-		}
-
-		if (ship.getKind().equals("BATTLESHIP")) {
-			shipLength = ship.getShipLength();
-		}
 
 		Ship new_ship = new Ship();
 		List<Square> occupiedSquares = new ArrayList<Square>();
