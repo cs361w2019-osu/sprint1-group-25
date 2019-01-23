@@ -1,6 +1,5 @@
 package cs361.battleships.models;
 
-@SuppressWarnings("unused")
 public class Square {
 
 	public int row;
