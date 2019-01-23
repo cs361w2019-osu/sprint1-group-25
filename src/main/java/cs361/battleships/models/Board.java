@@ -3,7 +3,6 @@ package cs361.battleships.models;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 // The Board, places Ship on itself.
-//
 
 
 import java.util.ArrayList;
@@ -50,6 +49,7 @@ public class Board {
 
 		int shipLength = 0;
 
+		// Can be better inplemented in the Ship.java class.
 		if (ship.getKind() == "MINESWEEPER") {
 			shipLength = 2;
 		} else if (ship.getKind() == "DESTROYER") {
