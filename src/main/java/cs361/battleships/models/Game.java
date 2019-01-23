@@ -19,6 +19,7 @@ public class Game {
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
+
     public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
         boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
         if (!successful)
@@ -34,9 +35,11 @@ public class Game {
         return true;
     }
 
+
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
+
     public boolean attack(int x, char  y) {
         Result playerAttack = opponentsBoard.attack(x, y);
         if (playerAttack.getResult() == INVALID) {
@@ -52,6 +55,8 @@ public class Game {
 
         return true;
     }
+
+
 
     private char randCol() {
         // TODO implement
