@@ -23,7 +23,6 @@ public class Square {
 	}
 
 	public int getRow() {
-//		System.out.println("Get row is called");
 		return row;
 	}
 

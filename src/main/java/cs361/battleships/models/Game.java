@@ -52,19 +52,16 @@ public class Game {
     }
 
     private char randCol() {
-        // TODO implement
         char randChar = (char)(rand.nextInt(10) + 65);
         return randChar;
     }
 
     private int randRow() {
-        // TODO implement
         int randInt = rand.nextInt(10) + 1;
         return randInt;
     }
 
     private boolean randVertical() {
-        // TODO implement
         boolean randBool = rand.nextBoolean();
         return false;
     }
