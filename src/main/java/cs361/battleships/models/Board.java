@@ -13,12 +13,13 @@ public class Board {
 	@JsonProperty private List<Square> boardSquares;
 	@JsonProperty private List<Result> listAttacks;
 	@JsonProperty private List<Ship> listShips;
-
+	@JsonProperty private List<Square> shipSquares;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Board() {
+		// Create a bunch of new square objects via loop, and store them in a list.
 
 		// Create a bunch of new square objects via loop, and store them in a list.
 		// Cycles through row numbers first, then columns.
@@ -42,10 +43,8 @@ public class Board {
 	 */
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		// TODO Implement
 		boolean shipPlaced = true;
 		int shipLength = 0;
-		List<Square> shipSquares;
 
 		if (ship.getKind() == "MINESWEEPER") {
 			shipLength = 2;
