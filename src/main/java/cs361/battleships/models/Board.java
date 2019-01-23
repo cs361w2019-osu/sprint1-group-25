@@ -114,10 +114,41 @@ public class Board {
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Result attack(int x, char y) {
-		int y_idx = (int)y - 65;
-		Square s = new Square(x, y);
-		Result a = new Result(s);
-		return a;
+
+		// Create a new result
+		Square attackSquare = new Square(x, y);
+		Result attackResult = new Result(attackSquare);
+
+		// Check if space has been attacked
+		for ( Result currentResult : this.attacks ) {
+			// If attacked, return INVALID
+			if (currentResult.getLocation() == attackResult.getLocation()) {
+				attackResult.setResult(AtackStatus.INVALID);
+				this.attacks.add(attackResult);
+				return attackResult;
+			}
+		}
+
+		boolean hit = false;
+
+		// Check all ships for square
+		for ( Ship currentShip : this.ships ) {
+			for ( Square currentSquare : currentShip.getOccupiedSquares() ) {
+				// If a square is found, mark hit
+				if ( (currentSquare.getRow() == x ) && ( currentSquare.getColumn() == y ) ) {
+
+					hit = true;
+					attackResult.setResult(AtackStatus.HIT);
+					break;
+				}
+			}
+			if ( hit ) { break; }
+		}
+		if ( !hit ) {
+			attackResult.setResult(AtackStatus.MISS);
+		}
+		this.attacks.add(attackResult);
+		return attackResult;
 	}
 
 	public List<Ship> getShips() {
