@@ -34,15 +34,15 @@ public class Board {
 
 		// Set shipLength according to ship type
 		if (ship.getKind().equals("MINESWEEPER")) {
-			shipLength = 2;
+			shipLength = ship.getShipLength();
 		}
 
 		if (ship.getKind().equals("DESTROYER")) {
-			shipLength = 3;
+			shipLength = ship.getShipLength();
 		}
 
 		if (ship.getKind().equals("BATTLESHIP")) {
-			shipLength = 4;
+			shipLength = ship.getShipLength();
 		}
 
 		Ship new_ship = new Ship();
