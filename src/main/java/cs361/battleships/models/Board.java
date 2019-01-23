@@ -135,6 +135,11 @@ public class Board {
 			}
 
 			if ( hit ) { break; }
+
+		}
+
+		if ( !hit ) {
+
 			attackResult.setResult(AtackStatus.MISS);
 
 		}
