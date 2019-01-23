@@ -2,6 +2,10 @@ package cs361.battleships.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+// The Board, places Ship on itself.
+//
+
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +17,6 @@ public class Board {
 	@JsonProperty private List<Square> boardSquares;
 	@JsonProperty private List<Result> listAttacks;
 	@JsonProperty private List<Ship> listShips;
-	@JsonProperty private List<Square> shipSquares;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -44,6 +47,7 @@ public class Board {
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
 		boolean shipPlaced = true;
+
 		int shipLength = 0;
 
 		if (ship.getKind() == "MINESWEEPER") {
@@ -53,6 +57,7 @@ public class Board {
 		} else if (ship.getKind() == "BATTLESHIP") {
 			shipLength = 4;
 		}
+		int shipLength = ship.getLength();
 
 		if (isVertical) {
 			// If the ship is vertical, you only need to worry about it falling off the bottom edge,
