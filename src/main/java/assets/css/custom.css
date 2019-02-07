@@ -1,7 +1,70 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
+.title{
+    height: 50px;
+    width:  1600px;
+    font-size: 50px;
+    text-align: center;
+}
+
+.titleplayer{
+   text-align:  center;
+   font-size:   25px;
+   color: blue;
+}
+
+.titleenemy{
+    text-align: center;
+    font-size: 25px;
+    color: red;
+}
+
+.board{
+    width: 1600px;
+    height: 900px;
+}
+
+.playerboard{
+    position: center;
+    float: right;
+    height  500px
+    width:  600px;
+}
+
+.enemyboard{
+    position: relative;
+    float: left;
+    height: 500px;
+    width:  600px;
+}
+
+.column1{
+    height: 0px;
+    width:  600px;
+    margin-left:    60px;
+    margin-bottom: 20px;
+}
+
+.column2{
+    height: 0px;
+    width:  600px;
+    margin-left:    170px;
+    margin-top: 20px;
+}
+
+.column li {
+    width:  34px;
+    float: left;
+    font-size: 18px;
+}
+
+/*.row{
+    position: absolute;
+    top: 112px;
+}*/
 
 .battleGrid {
+    margin: 0 auto;
     border: 1px solid black;
     border-spacing: 0px;
 }
