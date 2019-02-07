@@ -63,10 +63,29 @@
     top: 112px;
 }*/
 
+.outerGrid {
+    margin: 0 auto;
+    border: 1px solid black;
+    border-spacing: 0px;
+}
+
+.outerGrid tr {
+    border: 1px solid black;
+    height: 30px;
+    text-align: center;
+}
+
+.outerGrid td {
+    border: 1px solid black;
+    width: 30px;
+    text-align: center;
+}
+
 .battleGrid {
     margin: 0 auto;
     border: 1px solid black;
     border-spacing: 0px;
+    padding:0;
 }
 
 .battleGrid tr {

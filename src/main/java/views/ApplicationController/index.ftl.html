@@ -7,40 +7,110 @@
 <div class="board" >
     <div class="enemyboard" >
         <h2 class="titleenemy">Enemy</h2>
-        <ol class="column1">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-        </ol>
-        <table id="opponent" class="battleGrid">
+        <table class="outerGrid">
+            <tr>
+                <td> </td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>H</td>
+                <td>I</td>
+                <td>J</td>
+                <td>K</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td colspan="10" rowspan="10">
+                    <table id="opponent" class="battleGrid">
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>10</td>
+            </tr>
         </table>
     </div>
 
     <div class="playerboard" >
         <h2 class="titleplayer">Player</h2>
-        <ol class="column2">
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-        </ol>
-        <table id="player" class="battleGrid">
+        <table class="outerGrid">
+            <tr>
+                <td> </td>
+                <td>A</td>
+                <td>B</td>
+                <td>C</td>
+                <td>D</td>
+                <td>E</td>
+                <td>F</td>
+                <td>H</td>
+                <td>I</td>
+                <td>J</td>
+                <td>K</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td colspan="10" rowspan="10">
+                    <table id="player" class="battleGrid">
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>5</td>
+            </tr>
+            <tr>
+                <td>6</td>
+            </tr>
+            <tr>
+                <td>7</td>
+            </tr>
+            <tr>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>9</td>
+            </tr>
+            <tr>
+                <td>10</td>
+            </tr>
         </table>
 
-    <ul>
+        <ul>
         <li><button id="place_minesweeper">Place Minesweeper</button></li>
         <li><button id="place_destroyer">Place Destroyer</button></li>
         <li><button id="place_battleship">Place Battleship</button></li>
