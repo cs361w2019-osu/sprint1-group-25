@@ -73,6 +73,8 @@ function cellClick() {
             if (placedShips == 3) {
                 isSetup = false;
                 registerCellListener((e) => {});
+                document.getElementsByClassName("buttons")[0].style.display = "none";
+                document.getElementsByClassName("enemyboard")[0].style.display = "block";
             }
         });
     } else {

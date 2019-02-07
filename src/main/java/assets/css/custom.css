@@ -41,6 +41,12 @@ body {
     float: left;
     width: 50%;
     margin-bottom: 30px;
+    display: none;
+}
+
+.buttons {
+    float: left;
+    width: 45%;
 }
 
 .column1 {
