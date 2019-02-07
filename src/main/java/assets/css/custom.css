@@ -25,17 +25,22 @@ body {
 }
 
 .boards {
-    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .playerboard {
     float: right;
     width: 50%;
+    margin-bottom: 30px;
 }
 
 .enemyboard {
     float: left;
     width: 50%;
+    margin-bottom: 30px;
 }
 
 .column1 {
@@ -119,4 +124,11 @@ body {
 
 .miss {
     background-color: blue;
+}
+
+.clearfix::after {
+   content: " ";
+   display: block;
+   height: 0;
+   clear: both;
 }
