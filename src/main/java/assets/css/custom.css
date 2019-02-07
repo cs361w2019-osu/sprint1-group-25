@@ -1,59 +1,59 @@
 /* Add additional stylesheets below
 -------------------------------------------------- */
-.title{
+body {
+    font-family: 'Roboto';
+    font-size: 20px;
+}
+
+.title {
     height: 50px;
-    width:  1600px;
+    width: 100%;
     font-size: 50px;
     text-align: center;
 }
 
-.titleplayer{
-   text-align:  center;
-   font-size:   25px;
-   color: blue;
+.titleplayer {
+    text-align: center;
+    font-size: 25px;
+    color: blue;
 }
 
-.titleenemy{
+.titleenemy {
     text-align: center;
     font-size: 25px;
     color: red;
 }
 
-.board{
-    width: 1600px;
-    height: 900px;
+.boards {
+    width: 100%;
 }
 
-.playerboard{
-    position: center;
+.playerboard {
     float: right;
-    height  500px
-    width:  600px;
+    width: 50%;
 }
 
-.enemyboard{
-    position: relative;
+.enemyboard {
     float: left;
-    height: 500px;
-    width:  600px;
+    width: 50%;
 }
 
-.column1{
+.column1 {
     height: 0px;
-    width:  600px;
-    margin-left:    60px;
+    width: 600px;
+    margin-left: 60px;
     margin-bottom: 20px;
 }
 
-.column2{
+.column2 {
     height: 0px;
-    width:  600px;
-    margin-left:    170px;
+    width: 600px;
+    margin-left: 170px;
     margin-top: 20px;
 }
 
 .column li {
-    width:  34px;
+    width: 34px;
     float: left;
     font-size: 18px;
 }
@@ -62,21 +62,20 @@
     position: absolute;
     top: 112px;
 }*/
-
 .outerGrid {
     margin: 0 auto;
-    border: 1px solid black;
+    border: none;
     border-spacing: 0px;
 }
 
 .outerGrid tr {
-    border: 1px solid black;
+    border: none;
     height: 30px;
     text-align: center;
 }
 
 .outerGrid td {
-    border: 1px solid black;
+    border: none;
     width: 30px;
     text-align: center;
 }
@@ -85,7 +84,7 @@
     margin: 0 auto;
     border: 1px solid black;
     border-spacing: 0px;
-    padding:0;
+    padding: 0;
 }
 
 .battleGrid tr {
@@ -98,7 +97,7 @@
     width: 30px;
 }
 
-td:hover {
+.battleGrid td:hover {
     background-color: gray;
 }
 

@@ -1,127 +1,125 @@
-<#import "../layout/defaultLayout.ftl.html" as layout> 
-<@layout.myLayout "Home page">    
+<#import "../layout/defaultLayout.ftl.html" as layout>
+    <@layout.myLayout "Home page">
+        <h1 class="title">The Battleship game by group 25</h1>
 
+        <div class="board">
+            <div class="enemyboard">
+                <h2 class="titleenemy">Enemy</h2>
+                <table class="outerGrid">
+                    <tr>
+                        <td> </td>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                        <td>F</td>
+                        <td>H</td>
+                        <td>I</td>
+                        <td>J</td>
+                        <td>K</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td colspan="10" rowspan="10">
+                            <table id="opponent" class="battleGrid">
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                    </tr>
+                </table>
+            </div>
 
-<h1 class="title">The Battleship game by group 25</h1>
+            <div class="playerboard">
+                <h2 class="titleplayer">Player</h2>
+                <table class="outerGrid">
+                    <tr>
+                        <td> </td>
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>E</td>
+                        <td>F</td>
+                        <td>H</td>
+                        <td>I</td>
+                        <td>J</td>
+                        <td>K</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td colspan="10" rowspan="10">
+                            <table id="player" class="battleGrid">
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                    </tr>
+                </table>
 
-<div class="board" >
-    <div class="enemyboard" >
-        <h2 class="titleenemy">Enemy</h2>
-        <table class="outerGrid">
-            <tr>
-                <td> </td>
-                <td>A</td>
-                <td>B</td>
-                <td>C</td>
-                <td>D</td>
-                <td>E</td>
-                <td>F</td>
-                <td>H</td>
-                <td>I</td>
-                <td>J</td>
-                <td>K</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td colspan="10" rowspan="10">
-                    <table id="opponent" class="battleGrid">
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>9</td>
-            </tr>
-            <tr>
-                <td>10</td>
-            </tr>
-        </table>
-    </div>
+                <ul>
+                    <li><button id="place_minesweeper">Place Minesweeper</button></li>
+                    <li><button id="place_destroyer">Place Destroyer</button></li>
+                    <li><button id="place_battleship">Place Battleship</button></li>
+                    <li><input type="checkbox" id="is_vertical">Vertical</input></li>
+                </ul>
+            </div>
+        </div>
 
-    <div class="playerboard" >
-        <h2 class="titleplayer">Player</h2>
-        <table class="outerGrid">
-            <tr>
-                <td> </td>
-                <td>A</td>
-                <td>B</td>
-                <td>C</td>
-                <td>D</td>
-                <td>E</td>
-                <td>F</td>
-                <td>H</td>
-                <td>I</td>
-                <td>J</td>
-                <td>K</td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td colspan="10" rowspan="10">
-                    <table id="player" class="battleGrid">
-                    </table>
-                </td>
-            </tr>
-            <tr>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>5</td>
-            </tr>
-            <tr>
-                <td>6</td>
-            </tr>
-            <tr>
-                <td>7</td>
-            </tr>
-            <tr>
-                <td>8</td>
-            </tr>
-            <tr>
-                <td>9</td>
-            </tr>
-            <tr>
-                <td>10</td>
-            </tr>
-        </table>
+        <script type="text/javascript" src="/assets/game.js"></script>
+        <script>
+        initGame();
+        </script>
 
-        <ul>
-        <li><button id="place_minesweeper">Place Minesweeper</button></li>
-        <li><button id="place_destroyer">Place Destroyer</button></li>
-        <li><button id="place_battleship">Place Battleship</button></li>
-        <li><input type="checkbox" id="is_vertical">Vertical</input></li>
-    </ul>
-    </div>
-</div>
-
-<script type="text/javascript" src="/assets/game.js"></script>
-<script>
-    initGame();
-</script>
-
-</@layout.myLayout>
+    </@layout.myLayout>
