@@ -6,11 +6,17 @@ body {
 }
 
 .title {
-    height: 50px;
     width: 100%;
-    font-size: 50px;
     text-align: center;
+    margin: 15px 0;
 }
+
+.title2 {
+    width: 100%;
+    text-align: center;
+    margin-top: 0;
+}
+
 
 .titleplayer {
     text-align: center;
@@ -28,7 +34,7 @@ body {
     max-width: 900px;
     margin: 0 auto;
     border-radius: 2px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 }
 
 .playerboard {
@@ -44,9 +50,43 @@ body {
     display: none;
 }
 
+.buttons-wrapper {
+    clear: both;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    text-align: center;
+}
+
 .buttons {
     float: left;
     width: 45%;
+    list-style: none;
+    margin-top: 150px;
+}
+
+button {
+    background-color: #64b5f6;
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 16px;
+    width: 165px;
+}
+
+button:hover {
+    background-color: #62aae4;
+}
+
+button:active {
+    background-color: #5c9dd1;
+}
+
+.buttons li {
+    margin-bottom: 15px;
+    font-size: 12px;
+    /* float: left; */
 }
 
 .column1 {
@@ -69,10 +109,6 @@ body {
     font-size: 18px;
 }
 
-/*.row{
-    position: absolute;
-    top: 112px;
-}*/
 .outerGrid {
     margin: 0 auto;
     border: none;
@@ -133,8 +169,8 @@ body {
 }
 
 .clearfix::after {
-   content: " ";
-   display: block;
-   height: 0;
-   clear: both;
+    content: " ";
+    display: block;
+    height: 0;
+    clear: both;
 }

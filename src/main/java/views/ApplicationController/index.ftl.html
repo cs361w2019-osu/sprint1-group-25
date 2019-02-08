@@ -1,14 +1,16 @@
 <#import "../layout/defaultLayout.ftl.html" as layout>
     <@layout.myLayout "Home page">
-        <h1 class="title">The Battleship game by group 25</h1>
-
+        <h1 class="title">Battleship</h1>
+        <h3 class="title2">Group 25</h3>
         <div class="boards clearfix">
-            <ul class="buttons">
-                <li><button id="place_minesweeper">Place Minesweeper</button></li>
-                <li><button id="place_destroyer">Place Destroyer</button></li>
-                <li><button id="place_battleship">Place Battleship</button></li>
-                <li><input type="checkbox" id="is_vertical">Vertical</input></li>
-            </ul>
+            <div class="buttons-wrapper">
+                <ul class="buttons">
+                    <li><button id="place_minesweeper">Place Minesweeper</button></li>
+                    <li><button id="place_destroyer">Place Destroyer</button></li>
+                    <li><button id="place_battleship">Place Battleship</button></li>
+                    <li><input type="checkbox" id="is_vertical">Vertical</input></li>
+                </ul>
+            </div>
             <div class="enemyboard">
                 <h2 class="titleenemy">Enemy</h2>
                 <table class="outerGrid">

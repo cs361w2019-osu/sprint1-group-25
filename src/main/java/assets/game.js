@@ -70,6 +70,17 @@ function cellClick() {
             game = data;
             redrawGrid();
             placedShips++;
+
+            if (shipType === "MINESWEEPER") {
+                document.getElementById("place_minesweeper").style.backgroundColor = "#9e9e9e";
+            }
+            if (shipType === "BATTLESHIP") {
+                document.getElementById("place_battleship").style.backgroundColor = "#9e9e9e";
+            }
+            if (shipType === "DESTROYER") {
+                document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
+            }
+
             if (placedShips == 3) {
                 isSetup = false;
                 registerCellListener((e) => {});
