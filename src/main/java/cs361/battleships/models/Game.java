@@ -34,18 +34,19 @@ public class Game {
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
+    //WE PROBABLY HAVE TO CHANGE THIS, SO SQUARE CAN BE ATTACKED MORE THAN ONCE, TOO DESTROY CAPTAIN QUARTERS
     public boolean attack(int x, char  y) {
         Result playerAttack = opponentsBoard.attack(x, y);
-        if (playerAttack.getResult() == INVALID) {
-            return false;
-        }
-
+//        if (playerAttack.getResult() == INVALID) {
+//            return false;
+//        }
+        //The commented out parts, stop the AI from picking the same square
         Result opponentAttackResult;
-        do {
+//        do {
             // AI does random attacks, so it might attack the same spot twice
             // let it try until it gets it right
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
-        } while(opponentAttackResult.getResult() == INVALID);
+//        } while(opponentAttackResult.getResult() == INVALID);
 
         return true;
     }
