@@ -61,11 +61,11 @@ public class Square {
 		return "(" + row + ", " + column + ')';
 	}
 	
-	public boolean isRevealed() {
+	public boolean isVisible() {
 		return visible;
 	}
 
-	public void reveal() {
+	public void setVisible() {
 		visible = true;
 	}
 
