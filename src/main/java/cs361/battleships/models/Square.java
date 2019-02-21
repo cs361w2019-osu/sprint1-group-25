@@ -9,6 +9,8 @@ public class Square {
 	@JsonProperty private int row;
 	@JsonProperty private char column;
 	@JsonProperty private boolean hit = false;
+	@JsonProperty private boolean visible = false;
+
 
 	public Square() {
 	}
@@ -51,10 +53,20 @@ public class Square {
 
 	public void hit() {
 		hit = true;
+		visible = true;
 	}
 
 	@Override
 	public String toString() {
 		return "(" + row + ", " + column + ')';
 	}
+	
+	public boolean isRevealed() {
+		return visible;
+	}
+
+	public void reveal() {
+		visible = true;
+	}
+
 }
