@@ -15,6 +15,9 @@ public class Ship {
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
+	protected int CaptainQuarter;
+	protected int CQ_Armor;
+	protected boolean SunkCheck;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -25,13 +28,22 @@ public class Ship {
 		this.kind = kind;
 		switch(kind) {
 			case "MINESWEEPER":
-				size = 2;
+				this.size = 2;
+				this.CaptainQuarter = 0;
+				this.CQ_Armor = 0;
+				this.SunkCheck = false;
 				break;
 			case "DESTROYER":
-				size = 3;
+				this.size = 3;
+				this.CaptainQuarter = 1;
+				this.CQ_Armor =1;
+				this.SunkCheck= false;
 				break;
 			case "BATTLESHIP":
-				size = 4;
+				this.size = 4;
+				this.CaptainQuarter = 2;
+				this.CQ_Armor = 1;
+				this.SunkCheck=false;
 				break;
 		}
 	}
@@ -114,4 +126,9 @@ public class Ship {
 	public String toString() {
 		return kind + occupiedSquares.toString();
 	}
+
+	//public int getCQ_Armor() {return this.CQ_Armor;}
+	//public void hit_CQ() {this.CQ_Armor--;}
+	//public boolean getSunkCheck() {return this.SunkCheck;}
+	//public void setSunkCheck(boolean sinkIt) {this.SunkCheck = sinkIt;}
 }
