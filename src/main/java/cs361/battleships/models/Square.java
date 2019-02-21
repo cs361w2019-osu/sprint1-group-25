@@ -60,7 +60,7 @@ public class Square {
 	public String toString() {
 		return "(" + row + ", " + column + ')';
 	}
-	
+
 	public boolean isRevealed() {
 		return visible;
 	}
