@@ -50,6 +50,17 @@ public class Board {
 		return attackResult;
 	}
 
+	public Result attack(int x, char y, boolean isSonar) {
+		if (!isSonar) {
+			return attack(x, y);
+		}
+		else {
+			Result attackResult = attack(new Square(x, y));
+			attacks.add(attackResult);
+			return attackResult;
+		}
+	}
+
 	private Result attack(Square s) {
 		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
 			var attackResult = new Result(s);

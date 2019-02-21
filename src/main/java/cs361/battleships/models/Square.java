@@ -20,6 +20,11 @@ public class Square {
 		this.column = column;
 	}
 
+	public Square(int row, char column, boolean isSonar) {
+		this.row = row;
+		this.column = column;
+	}
+
 	public char getColumn() {
 		return column;
 	}
