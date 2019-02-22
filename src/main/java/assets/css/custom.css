@@ -83,7 +83,12 @@ button:active {
     background-color: #5c9dd1;
 }
 
+#sonar-wrapper {
+    text-align: center;
+}
+
 .sonar {
+    margin-top: 10px;
     background-color: #999999;
     border: none;
     color: white;
