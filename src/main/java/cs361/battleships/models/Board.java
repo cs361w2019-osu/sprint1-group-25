@@ -18,7 +18,7 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
-		sonars = 2;
+		sonars = 1;
 	}
 
 	/*
