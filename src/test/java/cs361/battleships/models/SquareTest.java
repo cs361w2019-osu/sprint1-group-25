@@ -48,17 +48,4 @@ public class SquareTest {
         assertNotEquals(square1.hashCode(), square2.hashCode());
     }
 
-    @Test
-    public void testIsVisible() {
-        Square square1 = new Square(1, 'A');
-        assertFalse(square1.isVisible());
-    }
-
-    @Test
-    public void testSetVisible() {
-        Square square1 = new Square(1, 'A');
-        square1.setVisible();
-        assertTrue(square1.isVisible());
-    }
-
 }
