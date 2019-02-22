@@ -23,7 +23,7 @@ function markHits(board, elementId, surrenderText) {
         console.log(attack);
         let className;
         if (attack.result === "MISS")
-            className = "miss";
+            className = "placed";
         else if (attack.result === "HIT")
             className = "occupied";
         else if (attack.result === "SUNK")
