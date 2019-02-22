@@ -107,6 +107,10 @@ function cellClick() {
     } else {
         sendXhr("POST", "/attack", {game: game, x: row, y: col, isSonar: isSonar}, function(data) {
             game = data;
+            if (isSonar) {
+                isSonar = false;
+                document.getElementById("sonar-wrapper").classList.toggle("sonar-on");
+            }
             redrawGrid();
         })
     }
