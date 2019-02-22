@@ -15,9 +15,9 @@ public class Ship {
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
-	protected int CaptainQuarter;
-	protected int CQ_Armor;
-	protected boolean SunkCheck;
+	protected int cq;
+	protected int cqArmor;
+	protected boolean sunk;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -29,21 +29,21 @@ public class Ship {
 		switch(kind) {
 			case "MINESWEEPER":
 				this.size = 2;
-				this.CaptainQuarter = 0;
-				this.CQ_Armor = 0;
-				this.SunkCheck = false;
+				this.cq = 0;
+				this.cqArmor = 0;
+				this.sunk = false;
 				break;
 			case "DESTROYER":
 				this.size = 3;
-				this.CaptainQuarter = 1;
-				this.CQ_Armor =1;
-				this.SunkCheck= false;
+				this.cq = 1;
+				this.cqArmor = 1;
+				this.sunk= false;
 				break;
 			case "BATTLESHIP":
 				this.size = 4;
-				this.CaptainQuarter = 2;
-				this.CQ_Armor = 1;
-				this.SunkCheck=false;
+				this.cq = 2;
+				this.cqArmor = 1;
+				this.sunk=false;
 				break;
 		}
 	}
@@ -84,20 +84,40 @@ public class Ship {
 			return new Result(attackedLocation);
 		}
 		var attackedSquare = square.get();
+
 		if (attackedSquare.isHit()) {
 			var result = new Result(attackedLocation);
 			result.setResult(AtackStatus.INVALID);
 			return result;
 		}
-		attackedSquare.hit();
+
 		var result = new Result(attackedLocation);
+
+		if ( isCq(attackedSquare) ){
+			if ( this.cqArmor > 0 ) {
+				this.cqArmor--;
+				result.setResult(AtackStatus.MISS);
+			} else if ( this.cqArmor == 0 ) {
+				attackedSquare.hit();
+				result.setResult(AtackStatus.SUNK);
+			}
+			result.setShip(this);
+			return result;
+		}
+
+		attackedSquare.hit();
 		result.setShip(this);
+
 		if (isSunk()) {
 			result.setResult(AtackStatus.SUNK);
 		} else {
 			result.setResult(AtackStatus.HIT);
 		}
 		return result;
+	}
+
+	public boolean isCq(Square s) {
+		return occupiedSquares.get(this.cq).equals(s);
 	}
 
 	@JsonIgnore
@@ -127,8 +147,9 @@ public class Ship {
 		return kind + occupiedSquares.toString();
 	}
 
-	//public int getCQ_Armor() {return this.CQ_Armor;}
-	//public void hit_CQ() {this.CQ_Armor--;}
+
+	//public int getCqArmor() {return this.CQ_Armor;}
+	//public void hitCq() {this.CQ_Armor--;}
 	//public boolean getSunkCheck() {return this.SunkCheck;}
 	//public void setSunkCheck(boolean sinkIt) {this.SunkCheck = sinkIt;}
 }
