@@ -11,6 +11,7 @@ public class Board {
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
 	@JsonProperty private int sonars;
+	@JsonProperty private boolean sonarEarned;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -19,6 +20,7 @@ public class Board {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
 		sonars = 1;
+		sonarEarned = false;
 	}
 
 	/*
@@ -94,6 +96,10 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
+			if ( this.sonarEarned == false ) {
+				this.sonars++;
+				this.sonarEarned = true;
+			}
 			if (ships.stream().allMatch(ship -> ship.isSunk())) {
 				attackResult.setResult(AtackStatus.SURRENDER);
 			}
