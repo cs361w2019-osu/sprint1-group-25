@@ -47,4 +47,5 @@ public class SquareTest {
         assertFalse(square1.equals(square2));
         assertNotEquals(square1.hashCode(), square2.hashCode());
     }
+
 }

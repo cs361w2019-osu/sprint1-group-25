@@ -3,6 +3,7 @@ var placedShips = 0;
 var game;
 var shipType;
 var vertical;
+var isSonar;
 
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
@@ -17,6 +18,21 @@ function makeGrid(table, isPlayer) {
 }
 
 function markHits(board, elementId, surrenderText) {
+    console.log("MARKING HITS");
+    board.sonarSquares.forEach((attack) => {
+        console.log(attack);
+        let className;
+        if (attack.result === "MISS")
+            className = "miss";
+        else if (attack.result === "HIT")
+            className = "occupied";
+        else if (attack.result === "SUNK")
+            className = "occupied";
+        else if (attack.result === "SURRENDER")
+            alert(surrenderText);
+        document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
+    });
+
     board.attacks.forEach((attack) => {
         let className;
         if (attack.result === "MISS")
@@ -24,7 +40,7 @@ function markHits(board, elementId, surrenderText) {
         else if (attack.result === "HIT")
             className = "hit";
         else if (attack.result === "SUNK")
-            className = "hit"
+            className = "hit";
         else if (attack.result === "SURRENDER")
             alert(surrenderText);
         document.getElementById(elementId).rows[attack.location.row-1].cells[attack.location.column.charCodeAt(0) - 'A'.charCodeAt(0)].classList.add(className);
@@ -89,7 +105,7 @@ function cellClick() {
             }
         });
     } else {
-        sendXhr("POST", "/attack", {game: game, x: row, y: col}, function(data) {
+        sendXhr("POST", "/attack", {game: game, x: row, y: col, isSonar: isSonar}, function(data) {
             game = data;
             redrawGrid();
         })
@@ -152,6 +168,11 @@ function initGame() {
         shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
+    document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
+        isSonar = !isSonar;
+        document.getElementById("sonar-wrapper").classList.toggle("sonar-on");
+    });
+
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });

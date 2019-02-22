@@ -10,6 +10,10 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	@JsonProperty private List<Result> sonarSquares;
+	@JsonProperty private int sonars;
+	@JsonProperty private boolean sonarEarned;
+	
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -17,6 +21,9 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonarSquares = new ArrayList<>();
+		sonars = 1;
+		sonarEarned = false;
 	}
 
 	/*
@@ -50,6 +57,21 @@ public class Board {
 		return attackResult;
 	}
 
+	public void sonar(int x, char y) {
+		this.sonars--;
+		for( int boxY = -2; boxY <= 2; boxY++ ) {
+			for( int boxX = -2; boxX <= 2; boxX++ ) {
+				if ( Math.abs(boxX) + Math.abs(boxY)  <= 2 ) {
+					Square s = new Square( (x + boxX), (char)((int)y + boxY) );
+					if (!s.isOutOfBounds()) {
+						Result attackResult = sonar(s);
+						sonarSquares.add(attackResult);
+					}
+				}
+			}
+		}
+	}
+
 	private Result attack(Square s) {
 		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
 			var attackResult = new Result(s);
@@ -64,11 +86,30 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
+			if ( this.sonarEarned == false ) {
+				this.sonars++;
+				this.sonarEarned = true;
+			}
 			if (ships.stream().allMatch(ship -> ship.isSunk())) {
 				attackResult.setResult(AtackStatus.SURRENDER);
 			}
 		}
 		return attackResult;
+	}
+	// Returns a result status based on the square passed in, but doesn't test against the attacks list.
+	private Result sonar(Square s) {
+		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
+		if (shipsAtLocation.size() == 0) {
+			var attackResult = new Result(s);
+			return attackResult;
+		}
+		var attackResult = new Result(s);
+		attackResult.setResult(AtackStatus.HIT);
+		return attackResult;
+	}
+
+	public int getSonars() {
+		return this.sonars;
 	}
 
 	List<Ship> getShips() {

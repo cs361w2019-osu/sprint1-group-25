@@ -10,10 +10,16 @@ public class Square {
 	@JsonProperty private char column;
 	@JsonProperty private boolean hit = false;
 
+
 	public Square() {
 	}
 
 	public Square(int row, char column) {
+		this.row = row;
+		this.column = column;
+	}
+
+	public Square(int row, char column, boolean isSonar) {
 		this.row = row;
 		this.column = column;
 	}
@@ -57,4 +63,5 @@ public class Square {
 	public String toString() {
 		return "(" + row + ", " + column + ')';
 	}
+
 }
