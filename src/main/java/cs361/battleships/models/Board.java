@@ -10,6 +10,7 @@ public class Board {
 
 	@JsonProperty private List<Ship> ships;
 	@JsonProperty private List<Result> attacks;
+	@JsonProperty private int sonars;
 
 	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
@@ -17,6 +18,7 @@ public class Board {
 	public Board() {
 		ships = new ArrayList<>();
 		attacks = new ArrayList<>();
+		sonars = 2;
 	}
 
 	/*
@@ -54,9 +56,26 @@ public class Board {
 		if (!isSonar) {
 			return attack(x, y);
 		}
+		else if ( this.sonars > 0 ) {
+			this.sonars--;
+			for( int boxY = -2; boxY <= 2; boxY++ ) {
+				for( int boxX = -2; boxX <= 2; boxY++ ) {
+					if ( Math.abs(boxX) + Math.abs(boxY)  <= 2 ) {
+						Square s = new Square( (x + boxX), (char)((int)y + boxY) );
+						if (!s.isOutOfBounds()) {
+							Result attackResult = attack(s);
+							attacks.add(attackResult);
+						}
+					}
+				}
+			}
+
+			Result attackResult = attack(new Square(x,y));
+			return attackResult;
+		}
 		else {
-			Result attackResult = attack(new Square(x, y));
-			attacks.add(attackResult);
+			Result attackResult = attack(new Square(x,y));
+			attackResult.setResult(AtackStatus.INVALID);
 			return attackResult;
 		}
 	}
