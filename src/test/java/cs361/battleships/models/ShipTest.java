@@ -133,7 +133,7 @@ public class ShipTest {
 
         assertEquals(AtackStatus.SUNK, result.getResult());
         assertEquals(minesweeper, result.getShip());
-        assertEquals(new Square(2, 'A'), result.getLocation());
+        assertEquals(new Square(1, 'A'), result.getLocation());
     }
 
     @Test
