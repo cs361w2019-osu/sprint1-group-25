@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
 import com.mchange.v1.util.CollectionUtils;
+import org.apache.commons.lang.SystemUtils;
 
+import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,35 +17,31 @@ public class Ship {
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
-	protected int CaptainQuarter;
-	protected int CQ_Armor;
-	protected boolean SunkCheck;
+	@JsonProperty protected int cq;
+	@JsonProperty protected int cqArmor;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
 	}
-	
+
 	public Ship(String kind) {
 		this();
 		this.kind = kind;
 		switch(kind) {
 			case "MINESWEEPER":
 				this.size = 2;
-				this.CaptainQuarter = 0;
-				this.CQ_Armor = 0;
-				this.SunkCheck = false;
+				this.cq = 0;
+				this.cqArmor = 0;
 				break;
 			case "DESTROYER":
 				this.size = 3;
-				this.CaptainQuarter = 1;
-				this.CQ_Armor =1;
-				this.SunkCheck= false;
+				this.cq = 1;
+				this.cqArmor = 1;
 				break;
 			case "BATTLESHIP":
 				this.size = 4;
-				this.CaptainQuarter = 2;
-				this.CQ_Armor = 1;
-				this.SunkCheck=false;
+				this.cq = 2;
+				this.cqArmor = 1;
 				break;
 		}
 	}
@@ -77,27 +75,51 @@ public class Ship {
 		return kind;
 	}
 
+	public Result attack(Square s) {
+		return attack( s.getRow(), s.getColumn() );
+	}
+
 	public Result attack(int x, char y) {
 		var attackedLocation = new Square(x, y);
 		var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
-		if (!square.isPresent()) {
-			return new Result(attackedLocation);
-		}
+		var result = new Result(attackedLocation);
+
+		// Check if square exists
+		if (!square.isPresent()) { return result; }
+
 		var attackedSquare = square.get();
+
 		if (attackedSquare.isHit()) {
-			var result = new Result(attackedLocation);
 			result.setResult(AtackStatus.INVALID);
 			return result;
 		}
-		attackedSquare.hit();
-		var result = new Result(attackedLocation);
+
 		result.setShip(this);
-		if (isSunk()) {
-			result.setResult(AtackStatus.SUNK);
+
+		// Check if square is ship's CQ
+		if ( isCq(attackedSquare) ) {
+			if ( this.cqArmor > 0 ) {
+				this.cqArmor--;
+				result.setResult(AtackStatus.MISS);
+			} else if ( this.cqArmor == 0 ) {
+				this.getOccupiedSquares().forEach(s -> s.hit());
+				result.setResult(AtackStatus.SUNK);
+			}
+			return result;
 		} else {
-			result.setResult(AtackStatus.HIT);
+			attackedSquare.hit();
+			if (isSunk()) {
+				result.setResult(AtackStatus.SUNK);
+			} else {
+				result.setResult(AtackStatus.HIT);
+			}
 		}
+
 		return result;
+	}
+
+	public boolean isCq(Square s) {
+		return this.occupiedSquares.get(this.cq).equals(s);
 	}
 
 	@JsonIgnore
@@ -127,8 +149,9 @@ public class Ship {
 		return kind + occupiedSquares.toString();
 	}
 
-	//public int getCQ_Armor() {return this.CQ_Armor;}
-	//public void hit_CQ() {this.CQ_Armor--;}
+
+	//public int getCqArmor() {return this.CQ_Armor;}
+	//public void hitCq() {this.CQ_Armor--;}
 	//public boolean getSunkCheck() {return this.SunkCheck;}
 	//public void setSunkCheck(boolean sinkIt) {this.SunkCheck = sinkIt;}
 }

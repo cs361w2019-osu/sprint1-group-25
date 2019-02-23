@@ -73,11 +73,12 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-			var attackResult = new Result(s);
-			attackResult.setResult(AtackStatus.INVALID);
-			return attackResult;
-		}
+		// CHECKS TO SEE IF A SQUARE HAS PREVIOUSLY BEEN ATTACKED
+		//if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
+		//	var attackResult = new Result(s);
+		//	attackResult.setResult(AtackStatus.INVALID);
+		//	return attackResult;
+		//}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
@@ -86,11 +87,21 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
-			for ( Result oneAttack : attacks ) {
-				if ( hitShip.isAtLocation(oneAttack.getLocation()) ) {
-					oneAttack.setResult(AtackStatus.SUNK);
+			for ( Square shipSquare : hitShip.getOccupiedSquares() ) {
+				boolean squareFound = false;
+				for ( Result eachAttack : this.attacks ) {
+					if ( eachAttack.getLocation() == shipSquare ) {
+						eachAttack.setResult(AtackStatus.SUNK);
+						squareFound = true;
+					}
+				}
+				if ( !squareFound ) {
+					Result missingResult = new Result(shipSquare);
+					missingResult.setResult(AtackStatus.SUNK);
+					this.attacks.add(missingResult);
 				}
 			}
+
 			if ( this.sonarEarned == false ) {
 				this.sonars++;
 				this.sonarEarned = true;
@@ -101,6 +112,7 @@ public class Board {
 		}
 		return attackResult;
 	}
+
 	// Returns a result status based on the square passed in, but doesn't test against the attacks list.
 	private Result sonar(Square s) {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());

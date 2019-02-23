@@ -128,12 +128,12 @@ public class ShipTest {
         Ship minesweeper = new Ship("MINESWEEPER");
         minesweeper.place('A', 1, true);
 
-        minesweeper.attack(1, 'A');
-        Result result = minesweeper.attack(2, 'A');
+        minesweeper.attack(2, 'A');
+        Result result = minesweeper.attack(1, 'A');
 
         assertEquals(AtackStatus.SUNK, result.getResult());
         assertEquals(minesweeper, result.getShip());
-        assertEquals(new Square(2, 'A'), result.getLocation());
+        assertEquals(new Square(1, 'A'), result.getLocation());
     }
 
     @Test
@@ -149,9 +149,9 @@ public class ShipTest {
     public void testAttackSameSquareTwice() {
         Ship minesweeper = new Ship("MINESWEEPER");
         minesweeper.place('A', 1, true);
-        var result = minesweeper.attack(1, 'A');
+        var result = minesweeper.attack(2, 'A');
         assertEquals(AtackStatus.HIT, result.getResult());
-        result = minesweeper.attack(1, 'A');
+        result = minesweeper.attack(2, 'A');
         assertEquals(AtackStatus.INVALID, result.getResult());
     }
 
@@ -163,5 +163,27 @@ public class ShipTest {
         minesweeper2.place('A', 1, true);
         assertTrue(minesweeper1.equals(minesweeper2));
         assertEquals(minesweeper1.hashCode(), minesweeper2.hashCode());
+    }
+
+    @Test
+    public void testIsCq() {
+        Ship battleship1 = new Ship("BATTLESHIP");
+        battleship1.place('A', 1, false);
+        Ship destroyer1 = new Ship("DESTROYER");
+        destroyer1.place('A', 2, false);
+        Ship minesweeper1 = new Ship("MINESWEEPER");
+        minesweeper1.place('A', 3, false);
+        Square battleshipGoodCq = new Square(1, 'C');
+        Square destroyerGoodCq = new Square(2, 'B');
+        Square minesweeperGoodCq = new Square(3, 'A');
+        Square battleshipBadCq = new Square(1, 'B');
+        Square destroyerBadCq = new Square(2, 'A');
+        Square minesweeperBadCq = new Square(3, 'B');
+        assertTrue(battleship1.isCq(battleshipGoodCq));
+        assertTrue(destroyer1.isCq(destroyerGoodCq));
+        assertTrue(minesweeper1.isCq(minesweeperGoodCq));
+        assertFalse(battleship1.isCq(battleshipBadCq));
+        assertFalse(destroyer1.isCq(destroyerBadCq));
+        assertFalse(minesweeper1.isCq(minesweeperBadCq));
     }
 }
