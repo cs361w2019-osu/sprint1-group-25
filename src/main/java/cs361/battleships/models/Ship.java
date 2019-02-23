@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Sets;
 import com.mchange.v1.util.CollectionUtils;
+import org.apache.commons.lang.SystemUtils;
 
+import java.awt.desktop.SystemEventListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +19,6 @@ public class Ship {
 	@JsonProperty private int size;
 	protected int cq;
 	protected int cqArmor;
-	protected boolean sunk;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -77,22 +78,24 @@ public class Ship {
 	public Result attack(int x, char y) {
 		var attackedLocation = new Square(x, y);
 		var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
-		if (!square.isPresent()) {
-			return new Result(attackedLocation);
-		}
+		var result = new Result(attackedLocation);
+
+		// Check if square exists
+		if (!square.isPresent()) { return result; }
+
 		var attackedSquare = square.get();
+		
 
 		if (attackedSquare.isHit()) {
-			var result = new Result(attackedLocation);
 			result.setResult(AtackStatus.INVALID);
 			return result;
 		}
 
-		var result = new Result(attackedLocation);
-
-		if ( isCq(attackedSquare) ){
+		// Check if square is ship's CQ
+		if ( isCq(attackedSquare) ) {
 			if ( this.cqArmor > 0 ) {
 				this.cqArmor--;
+				System.out.println("CQ HIT");
 				result.setResult(AtackStatus.MISS);
 			} else if ( this.cqArmor == 0 ) {
 				attackedSquare.hit();
@@ -114,7 +117,7 @@ public class Ship {
 	}
 
 	public boolean isCq(Square s) {
-		return occupiedSquares.get(this.cq).equals(s);
+		return this.occupiedSquares.get(this.cq).equals(s);
 	}
 
 	@JsonIgnore
