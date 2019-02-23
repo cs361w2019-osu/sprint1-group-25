@@ -23,7 +23,7 @@ public class Ship {
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
 	}
-	
+
 	public Ship(String kind) {
 		this();
 		this.kind = kind;
@@ -101,7 +101,11 @@ public class Ship {
 				this.cqArmor--;
 				result.setResult(AtackStatus.MISS);
 			} else if ( this.cqArmor == 0 ) {
-				attackedSquare.hit();
+				int i;
+				System.out.println("CQ SUNK");
+				for (i = 0; i < this.size; i++) {
+					this.getOccupiedSquares().get(i).hit();
+				}
 				result.setResult(AtackStatus.SUNK);
 			}
 		} else {
