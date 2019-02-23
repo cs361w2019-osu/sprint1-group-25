@@ -86,6 +86,11 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
+			for ( Result oneAttack : attacks ) {
+				if ( hitShip.isAtLocation(oneAttack.getLocation()) ) {
+					oneAttack.setResult(AtackStatus.SUNK);
+				}
+			}
 			if ( this.sonarEarned == false ) {
 				this.sonars++;
 				this.sonarEarned = true;
