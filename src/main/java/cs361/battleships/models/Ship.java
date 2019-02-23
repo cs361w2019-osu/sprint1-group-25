@@ -17,8 +17,8 @@ public class Ship {
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
 	@JsonProperty private int size;
-	protected int cq;
-	protected int cqArmor;
+	@JsonProperty protected int cq;
+	@JsonProperty protected int cqArmor;
 
 	public Ship() {
 		occupiedSquares = new ArrayList<>();
@@ -84,35 +84,35 @@ public class Ship {
 		if (!square.isPresent()) { return result; }
 
 		var attackedSquare = square.get();
-		
 
 		if (attackedSquare.isHit()) {
 			result.setResult(AtackStatus.INVALID);
 			return result;
 		}
 
+		result.setShip(this);
+
 		// Check if square is ship's CQ
 		if ( isCq(attackedSquare) ) {
+			System.out.println(this.cq);
+			System.out.println(this.cqArmor);
+
 			if ( this.cqArmor > 0 ) {
 				this.cqArmor--;
-				System.out.println("CQ HIT");
 				result.setResult(AtackStatus.MISS);
 			} else if ( this.cqArmor == 0 ) {
 				attackedSquare.hit();
 				result.setResult(AtackStatus.SUNK);
 			}
-			result.setShip(this);
-			return result;
-		}
-
-		attackedSquare.hit();
-		result.setShip(this);
-
-		if (isSunk()) {
-			result.setResult(AtackStatus.SUNK);
 		} else {
-			result.setResult(AtackStatus.HIT);
+			attackedSquare.hit();
+			if (isSunk()) {
+				result.setResult(AtackStatus.SUNK);
+			} else {
+				result.setResult(AtackStatus.HIT);
+			}
 		}
+
 		return result;
 	}
 
