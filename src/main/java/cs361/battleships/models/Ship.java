@@ -75,6 +75,10 @@ public class Ship {
 		return kind;
 	}
 
+	public Result attack(Square s) {
+		return attack( s.getRow(), s.getColumn() );
+	}
+
 	public Result attack(int x, char y) {
 		var attackedLocation = new Square(x, y);
 		var square = getOccupiedSquares().stream().filter(s -> s.equals(attackedLocation)).findFirst();
@@ -94,9 +98,6 @@ public class Ship {
 
 		// Check if square is ship's CQ
 		if ( isCq(attackedSquare) ) {
-			System.out.println(this.cq);
-			System.out.println(this.cqArmor);
-
 			if ( this.cqArmor > 0 ) {
 				this.cqArmor--;
 				result.setResult(AtackStatus.MISS);

@@ -87,11 +87,21 @@ public class Board {
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
-			for ( Result oneAttack : attacks ) {
-				if ( hitShip.isAtLocation(oneAttack.getLocation()) ) {
-					oneAttack.setResult(AtackStatus.SUNK);
+			for ( Square shipSquare : hitShip.getOccupiedSquares() ) {
+				boolean squareFound = false;
+				for ( Result eachAttack : this.attacks ) {
+					if ( eachAttack.getLocation() == shipSquare ) {
+						eachAttack.setResult(AtackStatus.SUNK);
+						squareFound = true;
+					}
+				}
+				if ( !squareFound ) {
+					Result missingResult = new Result(shipSquare);
+					missingResult.setResult(AtackStatus.SUNK);
+					this.attacks.add(missingResult);
 				}
 			}
+
 			if ( this.sonarEarned == false ) {
 				this.sonars++;
 				this.sonarEarned = true;
