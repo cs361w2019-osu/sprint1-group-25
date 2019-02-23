@@ -31,19 +31,16 @@ public class Ship {
 				this.size = 2;
 				this.cq = 0;
 				this.cqArmor = 0;
-				this.sunk = false;
 				break;
 			case "DESTROYER":
 				this.size = 3;
 				this.cq = 1;
 				this.cqArmor = 1;
-				this.sunk= false;
 				break;
 			case "BATTLESHIP":
 				this.size = 4;
 				this.cq = 2;
 				this.cqArmor = 1;
-				this.sunk=false;
 				break;
 		}
 	}

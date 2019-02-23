@@ -23,8 +23,6 @@ public class Game {
 
         boolean opponentPlacedSuccessfully;
         do {
-            // AI places random ships, so it might try and place overlapping ships
-            // let it try until it gets it right
             opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
         } while (!opponentPlacedSuccessfully);
 
@@ -34,19 +32,15 @@ public class Game {
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
-    //WE PROBABLY HAVE TO CHANGE THIS, SO SQUARE CAN BE ATTACKED MORE THAN ONCE, TO DESTROY CAPTAIN QUARTERS
     public boolean attack(int x, char  y) {
         Result playerAttack = opponentsBoard.attack(x, y);
-//        if (playerAttack.getResult() == INVALID) {
-//            return false;
-//        }
-        //The commented out parts, stop the AI from picking the same square
+        if (playerAttack.getResult() == INVALID) {
+            return false;
+       }
         Result opponentAttackResult;
-//        do {
-            // AI does random attacks, so it might attack the same spot twice
-            // let it try until it gets it right
+        do {
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
-//        } while(opponentAttackResult.getResult() == INVALID);
+        } while(opponentAttackResult.getResult() == INVALID);
 
         return true;
     }
@@ -63,10 +57,8 @@ public class Game {
             }
         }
 
-        //The commented out parts, stop the AI from picking the same square
         Result opponentAttackResult;
         do {
-            // AI does random attacks, so it might attack the same spot twice let it try until it gets it right
             opponentAttackResult = playersBoard.attack(randRow(), randCol());
         } while(opponentAttackResult.getResult() == INVALID);
 

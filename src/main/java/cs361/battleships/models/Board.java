@@ -73,11 +73,12 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-			var attackResult = new Result(s);
-			attackResult.setResult(AtackStatus.INVALID);
-			return attackResult;
-		}
+		// CHECKS TO SEE IF A SQUARE HAS PREVIOUSLY BEEN ATTACKED
+		//if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
+		//	var attackResult = new Result(s);
+		//	attackResult.setResult(AtackStatus.INVALID);
+		//	return attackResult;
+		//}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
@@ -101,6 +102,7 @@ public class Board {
 		}
 		return attackResult;
 	}
+
 	// Returns a result status based on the square passed in, but doesn't test against the attacks list.
 	private Result sonar(Square s) {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());

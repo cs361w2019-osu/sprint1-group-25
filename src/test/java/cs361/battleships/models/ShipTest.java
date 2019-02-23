@@ -167,11 +167,23 @@ public class ShipTest {
 
     @Test
     public void testIsCq() {
-        Ship minesweeper1 = new Ship("BATTLESHIP");
-        minesweeper1.place('A', 1, false);
-        Square goodCq = new Square(1, 'C');
-        Square badCq = new Square(1, 'B');
-        assertTrue(minesweeper1.isCq(goodCq));
-        assertFalse(minesweeper1.isCq(badCq));
+        Ship battleship1 = new Ship("BATTLESHIP");
+        battleship1.place('A', 1, false);
+        Ship destroyer1 = new Ship("DESTROYER");
+        destroyer1.place('A', 2, false);
+        Ship minesweeper1 = new Ship("MINESWEEPER");
+        minesweeper1.place('A', 3, false);
+        Square battleshipGoodCq = new Square(1, 'C');
+        Square destroyerGoodCq = new Square(2, 'B');
+        Square minesweeperGoodCq = new Square(3, 'A');
+        Square battleshipBadCq = new Square(1, 'B');
+        Square destroyerBadCq = new Square(2, 'A');
+        Square minesweeperBadCq = new Square(3, 'B');
+        assertTrue(battleship1.isCq(battleshipGoodCq));
+        assertTrue(destroyer1.isCq(destroyerGoodCq));
+        assertTrue(minesweeper1.isCq(minesweeperGoodCq));
+        assertFalse(battleship1.isCq(battleshipBadCq));
+        assertFalse(destroyer1.isCq(destroyerBadCq));
+        assertFalse(minesweeper1.isCq(minesweeperBadCq));
     }
 }
