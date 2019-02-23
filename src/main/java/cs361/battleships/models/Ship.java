@@ -102,13 +102,10 @@ public class Ship {
 				this.cqArmor--;
 				result.setResult(AtackStatus.MISS);
 			} else if ( this.cqArmor == 0 ) {
-				int i;
-				System.out.println("CQ SUNK");
-				for (i = 0; i < this.size; i++) {
-					this.getOccupiedSquares().get(i).hit();
-				}
+				this.getOccupiedSquares().forEach(s -> s.hit());
 				result.setResult(AtackStatus.SUNK);
 			}
+			return result;
 		} else {
 			attackedSquare.hit();
 			if (isSunk()) {
