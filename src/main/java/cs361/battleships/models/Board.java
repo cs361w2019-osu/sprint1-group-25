@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 public class Board {
 
 	@JsonProperty private List<Ship> ships;
+	@JsonProperty private List<Ship> submarines;
 	@JsonProperty private List<Result> attacks;
 	@JsonProperty private List<Result> sonarSquares;
 	@JsonProperty private int sonars;
@@ -20,6 +21,7 @@ public class Board {
 	 */
 	public Board() {
 		ships = new ArrayList<>();
+		submarines = new ArrayList<>();
 		attacks = new ArrayList<>();
 		sonarSquares = new ArrayList<>();
 		sonars = 1;
