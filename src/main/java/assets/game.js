@@ -3,6 +3,7 @@ var placedShips = 0;
 var game;
 var shipType;
 var vertical;
+var submerged;
 var isSonar;
 
 function makeGrid(table, isPlayer) {
