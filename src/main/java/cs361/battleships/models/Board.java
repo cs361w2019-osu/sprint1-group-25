@@ -28,9 +28,6 @@ public class Board {
 		sonarEarned = false;
 	}
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
 		if (ships.size() >= 3) {
 			return false;
@@ -50,9 +47,6 @@ public class Board {
 		return true;
 	}
 
-	/*
-DO NOT change the signature of this method. It is used by the grading scripts.
- */
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
 		if (ships.size() >= 4) {
 			return false;
@@ -61,20 +55,26 @@ DO NOT change the signature of this method. It is used by the grading scripts.
 			return false;
 		}
 		final var placedShip = new Ship(ship.getKind());
-		placedShip.place(y, x, isVertical);
-		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
-			return false;
+		placedShip.place(y, x, isVertical, isSubmerged );
+		if ( !isSubmerged ) {
+			if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
+				return false;
+			}
+			if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
+				return false;
+			}
+			ships.add(placedShip);
+			return true;
+		} else {
+			if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
+				return false;
+			}
+			submarines.add(placedShip);
+			return true;
 		}
-		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
-			return false;
-		}
-		ships.add(placedShip);
-		return true;
+
 	}
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
 	public Result attack(int x, char y) {
 		Result attackResult = attack(new Square(x, y));
 		attacks.add(attackResult);

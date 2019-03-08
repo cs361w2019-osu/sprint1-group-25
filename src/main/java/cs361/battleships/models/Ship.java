@@ -16,6 +16,7 @@ public class Ship {
 
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
+	@JsonProperty private boolean submerged;
 	@JsonProperty private int size;
 	@JsonProperty protected int cq;
 	@JsonProperty protected int cqArmor;
@@ -27,6 +28,7 @@ public class Ship {
 	public Ship(String kind) {
 		this();
 		this.kind = kind;
+		this.submerged = false;
 		switch(kind) {
 			case "MINESWEEPER":
 				this.size = 2;
@@ -45,7 +47,7 @@ public class Ship {
 				break;
 			case "SUBMARINE":
 				this.size = 5;
-				this.cq = 4;
+				this.cq = 3;
 				this.cqArmor = 1;
 		}
 	}
@@ -54,7 +56,10 @@ public class Ship {
 		return occupiedSquares;
 	}
 
-	public void place(char col, int row, boolean isVertical) {
+	public void place(char col, int row, boolean isVertical, boolean isSubmerged) {
+		if ( isSubmerged ) {
+			this.submerged = true;
+		}
 		for (int i=0; i<size; i++) {
 			if ( i == 4 ) {
 				if (isVertical) {
