@@ -58,7 +58,7 @@ public class Ship {
 		for (int i=0; i<size; i++) {
 			if ( i == 4 ) {
 				if (isVertical) {
-					occupiedSquares.add(new Square(row + 2, (char) (col + 1));
+					occupiedSquares.add(new Square(row + 2, (char) (col + 1)));
 				} else {
 					occupiedSquares.add(new Square(row + 1, (char) (col + 2)));
 				}
@@ -161,5 +161,5 @@ public class Ship {
 	public String toString() {
 		return kind + occupiedSquares.toString();
 	}
-	
+
 }
