@@ -51,6 +51,28 @@ public class Board {
 	}
 
 	/*
+DO NOT change the signature of this method. It is used by the grading scripts.
+ */
+	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
+		if (ships.size() >= 4) {
+			return false;
+		}
+		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
+			return false;
+		}
+		final var placedShip = new Ship(ship.getKind());
+		placedShip.place(y, x, isVertical);
+		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
+			return false;
+		}
+		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
+			return false;
+		}
+		ships.add(placedShip);
+		return true;
+	}
+
+	/*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
 	public Result attack(int x, char y) {
@@ -75,12 +97,6 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		// CHECKS TO SEE IF A SQUARE HAS PREVIOUSLY BEEN ATTACKED
-		//if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-		//	var attackResult = new Result(s);
-		//	attackResult.setResult(AtackStatus.INVALID);
-		//	return attackResult;
-		//}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
