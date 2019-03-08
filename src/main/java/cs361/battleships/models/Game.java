@@ -16,14 +16,14 @@ public class Game {
     /*
 	DO NOT change the signature of this method. It is used by the grading scripts.
 	 */
-    public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-        boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
+    public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
+        boolean successful = playersBoard.placeShip(ship, x, y, isVertical, isSubmerged);
         if (!successful)
             return false;
 
         boolean opponentPlacedSuccessfully;
         do {
-            opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
+            opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical(), randSubmerged());
         } while (!opponentPlacedSuccessfully);
 
         return true;
@@ -59,6 +59,10 @@ public class Game {
     }
 
     private boolean randVertical() {
+        return new Random().nextBoolean();
+    }
+
+    private boolean randSubmerged() {
         return new Random().nextBoolean();
     }
 }
