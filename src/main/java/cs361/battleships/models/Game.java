@@ -29,22 +29,6 @@ public class Game {
         return true;
     }
 
-    /*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
-    public boolean attack(int x, char  y) {
-        Result playerAttack = opponentsBoard.attack(x, y);
-        if (playerAttack.getResult() == INVALID) {
-            return false;
-       }
-        Result opponentAttackResult;
-        do {
-            opponentAttackResult = playersBoard.attack(randRow(), randCol());
-        } while(opponentAttackResult.getResult() == INVALID);
-
-        return true;
-    }
-
     public boolean attack(int x, char  y, boolean isSonar) {
         if (isSonar && opponentsBoard.getSonars() > 0) {
             opponentsBoard.sonar(x, y);
