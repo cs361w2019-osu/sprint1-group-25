@@ -179,7 +179,7 @@ function initGame() {
     });
     document.getElementById("place_submarine").addEventListener("click", function(e) {
         shipType = "SUBMARINE";
-       registerCellListener(place(4));
+       registerCellListener(place(5));
     });
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
         isSonar = !isSonar;
