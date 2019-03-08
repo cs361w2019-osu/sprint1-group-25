@@ -101,7 +101,7 @@ function cellClick() {
                 document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
             }
 
-            if (placedShips == 3) {
+            if (placedShips == 4) {
                 isSetup = false;
                 registerCellListener((e) => {});
                 document.getElementsByClassName("buttons")[0].style.display = "none";

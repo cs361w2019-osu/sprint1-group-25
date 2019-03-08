@@ -28,25 +28,6 @@ public class Board {
 		sonarEarned = false;
 	}
 
-	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		if (ships.size() >= 3) {
-			return false;
-		}
-		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
-			return false;
-		}
-		final var placedShip = new Ship(ship.getKind());
-		placedShip.place(y, x, isVertical);
-		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
-			return false;
-		}
-		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
-			return false;
-		}
-		ships.add(placedShip);
-		return true;
-	}
-
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
 		if (ships.size() >= 4) {
 			return false;
