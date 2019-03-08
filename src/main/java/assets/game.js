@@ -82,7 +82,7 @@ function cellClick() {
     let row = this.parentNode.rowIndex + 1;
     let col = String.fromCharCode(this.cellIndex + 65);
     if (isSetup) {
-        sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical}, function(data) {
+        sendXhr("POST", "/place", {game: game, shipType: shipType, x: row, y: col, isVertical: vertical, isSubmerged: submerged}, function(data) {
             game = data;
             redrawGrid();
             placedShips++;
@@ -94,6 +94,9 @@ function cellClick() {
                 document.getElementById("place_battleship").style.backgroundColor = "#9e9e9e";
             }
             if (shipType === "DESTROYER") {
+                document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
+            }
+            if (shipType === "SUBMARINE") {
                 document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
             }
 
@@ -135,6 +138,7 @@ function place(size) {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
         vertical = document.getElementById("is_vertical").checked;
+        submerged = document.getElementById("is_submerged").checked;
         let table = document.getElementById("player");
         for (let i=0; i<size; i++) {
             let cell;
@@ -170,6 +174,10 @@ function initGame() {
     });
     document.getElementById("place_battleship").addEventListener("click", function(e) {
         shipType = "BATTLESHIP";
+       registerCellListener(place(4));
+    });
+    document.getElementById("place_submarine").addEventListener("click", function(e) {
+        shipType = "SUBMARINE";
        registerCellListener(place(4));
     });
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
