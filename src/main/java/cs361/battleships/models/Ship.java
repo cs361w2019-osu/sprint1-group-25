@@ -43,6 +43,10 @@ public class Ship {
 				this.cq = 2;
 				this.cqArmor = 1;
 				break;
+			case "SUBMARINE":
+				this.size = 5;
+				this.cq = 4;
+				this.cqArmor = 1;
 		}
 	}
 
@@ -52,11 +56,20 @@ public class Ship {
 
 	public void place(char col, int row, boolean isVertical) {
 		for (int i=0; i<size; i++) {
-			if (isVertical) {
-				occupiedSquares.add(new Square(row+i, col));
+			if ( i == 4 ) {
+				if (isVertical) {
+					occupiedSquares.add(new Square(row + 2, (char) (col + 1));
+				} else {
+					occupiedSquares.add(new Square(row + 1, (char) (col + 2)));
+				}
 			} else {
-				occupiedSquares.add(new Square(row, (char) (col + i)));
+				if (isVertical) {
+					occupiedSquares.add(new Square(row + i, col));
+				} else {
+					occupiedSquares.add(new Square(row, (char) (col + i)));
+				}
 			}
+
 		}
 	}
 
