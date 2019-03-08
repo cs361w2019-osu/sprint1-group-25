@@ -161,10 +161,5 @@ public class Ship {
 	public String toString() {
 		return kind + occupiedSquares.toString();
 	}
-
-
-	//public int getCqArmor() {return this.CQ_Armor;}
-	//public void hitCq() {this.CQ_Armor--;}
-	//public boolean getSunkCheck() {return this.SunkCheck;}
-	//public void setSunkCheck(boolean sinkIt) {this.SunkCheck = sinkIt;}
+	
 }
