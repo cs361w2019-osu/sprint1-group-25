@@ -15,10 +15,7 @@ public class Board {
 	@JsonProperty private int sonars;
 	@JsonProperty private boolean sonarEarned;
 	
-
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
+	
 	public Board() {
 		ships = new ArrayList<>();
 		submarines = new ArrayList<>();
