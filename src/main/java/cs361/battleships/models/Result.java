@@ -7,17 +7,20 @@ public class Result {
 	@JsonProperty private AtackStatus result;
 	@JsonProperty private Square location;
 	@JsonProperty private Ship ship;
+	@JsonProperty private boolean submerged;
 	@SuppressWarnings("unused")
+
 	public Result() {
 	}
 
 	public Result(Square location) {
-		result = AtackStatus.MISS;
+		this.result = AtackStatus.MISS;
 		this.location = location;
+		this.submerged = false;
 	}
 
 	public AtackStatus getResult() {
-		return result;
+		return this.result;
 	}
 
 	public void setResult(AtackStatus result) {
@@ -25,7 +28,7 @@ public class Result {
 	}
 
 	public Ship getShip() {
-		return ship;
+		return this.ship;
 	}
 
 	public void setShip(Ship ship) {
@@ -33,6 +36,14 @@ public class Result {
 	}
 
 	public Square getLocation() {
-		return location;
+		return this.location;
+	}
+
+	public boolean getSubmerged() {
+		return this.submerged;
+	}
+
+	public void setSubmerged() {
+		this.submerged = true;
 	}
 }
