@@ -26,30 +26,39 @@ public class Board {
 	}
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
+
+		// Check for max ship count on board, fail if max is hit
 		if (ships.size() >= 4) {
 			return false;
 		}
+
+		// Check for other ships of same type, fail if found
 		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
 			return false;
 		}
+
+		// Create a new ship
 		final var placedShip = new Ship(ship.getKind());
-		placedShip.place(y, x, isVertical, isSubmerged);
-		if ( !isSubmerged ) {
-			if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
-				return false;
-			}
-			if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
-				return false;
-			}
-			ships.add(placedShip);
-			return true;
-		} else {
-			if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
-				return false;
-			}
+
+		// Ignore submerge if ship is not a sub
+		if ( placedShip.getKind() == "SUBMARINE") {
+			placedShip.place(y, x, isVertical, isSubmerged);
 			submarines.add(placedShip);
 			return true;
+		} else {
+			placedShip.place(y, x, isVertical, false);
 		}
+
+		// Check if new ship overlaps others
+		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
+			return false;
+		}
+		// Check if new ship is off the board
+		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
+			return false;
+		}
+		ships.add(placedShip);
+		return true;
 
 	}
 

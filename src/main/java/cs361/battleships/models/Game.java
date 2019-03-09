@@ -60,6 +60,10 @@ public class Game {
     }
 
     private boolean randSubmerged() {
-        return new Random().nextBoolean();
+
+        // Disable RNG until ships are denied underwater placement
+        return false;
+
+        //return new Random().nextBoolean();
     }
 }
