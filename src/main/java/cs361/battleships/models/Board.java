@@ -40,14 +40,15 @@ public class Board {
 		// Create a new ship
 		final var placedShip = new Ship(ship.getKind());
 
-		// Ignore submerge if ship is not a sub
+		// Handle submarine case
 		if ( placedShip.getKind() == "SUBMARINE") {
 			placedShip.place(y, x, isVertical, isSubmerged);
 			submarines.add(placedShip);
 			return true;
-		} else {
-			placedShip.place(y, x, isVertical, false);
 		}
+
+		// Place the ship on the board
+		placedShip.place(y, x, isVertical, false);
 
 		// Check if new ship overlaps others
 		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
