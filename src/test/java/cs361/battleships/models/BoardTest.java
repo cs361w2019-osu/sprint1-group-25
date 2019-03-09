@@ -49,7 +49,7 @@ public class BoardTest {
         board.placeShip(minesweeper, 1, 'A', true);
         board.attack(1, 'A');
         Result result = board.attack(1, 'A');
-        assertEquals(AtackStatus.INVALID, result.getResult());
+        assertEquals(AtackStatus.SURRENDER, result.getResult());
     }
 
     @Test
