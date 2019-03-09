@@ -33,7 +33,7 @@ public class PlacementGameAction {
     }
 
     public boolean isSubmerged() {
-        return isVertical;
+        return isSubmerged;
     }
 
 }
