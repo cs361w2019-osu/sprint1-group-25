@@ -74,6 +74,8 @@ public class Board {
 		}
 	}
 
+
+
 	private Result attack(Square s) {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
