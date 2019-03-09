@@ -28,7 +28,7 @@ public class Board {
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
 
 		// Check for max ship count on board, fail if max is hit
-		if (ships.size() >= 4) {
+		if ( ( ships.size() + submarines.size() ) >= 4 ) {
 			return false;
 		}
 
@@ -82,8 +82,6 @@ public class Board {
 			}
 		}
 	}
-
-
 
 	private Result attack(Square s) {
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
