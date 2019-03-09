@@ -115,7 +115,7 @@ public class Ship {
 		result.setShip(this);
 
 		// Check if square is ship's CQ
-		if ( isCq(attackedSquare) ) {
+		if ( isCq(attackedSquare ) ) {
 			if ( this.cqArmor > 0 ) {
 				this.cqArmor--;
 				result.setResult(AtackStatus.MISS);
@@ -123,6 +123,7 @@ public class Ship {
 				this.getOccupiedSquares().forEach(s -> s.hit());
 				result.setResult(AtackStatus.SUNK);
 			}
+			System.out.print(result.getResult());
 			return result;
 		} else {
 			attackedSquare.hit();
