@@ -15,7 +15,7 @@ public class Board {
 	@JsonProperty private int sonars;
 	@JsonProperty private boolean sonarEarned;
 	
-	
+
 	public Board() {
 		ships = new ArrayList<>();
 		submarines = new ArrayList<>();

@@ -179,6 +179,9 @@ function initGame() {
     });
     document.getElementById("place_submarine").addEventListener("click", function(e) {
         shipType = "SUBMARINE";
+        if ( isSubmerged ) {
+            isSubmerged = !isSubmerged;
+        }
        registerCellListener(place(5));
     });
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
