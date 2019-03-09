@@ -98,7 +98,7 @@ function cellClick() {
                 document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
             }
             if (shipType === "SUBMARINE") {
-                document.getElementById("place_destroyer").style.backgroundColor = "#9e9e9e";
+                document.getElementById("place_submarine").style.backgroundColor = "#9e9e9e";
             }
 
             if (placedShips == 4) {
