@@ -139,19 +139,26 @@ function place(size) {
         let row = this.parentNode.rowIndex;
         let col = this.cellIndex;
         vertical = document.getElementById("is_vertical").checked;
-        submerged = document.getElementById("is_submerged").checked;
         let table = document.getElementById("player");
         for (let i=0; i<size; i++) {
             let cell;
             if(vertical) {
-                let tableRow = table.rows[row+i];
+                if(i == 4){
+                    let tableRow = table.rows[row+i-2];
+                } else {
+                    let tableRow = table.rows[row+i];
+                }
                 if (tableRow === undefined) {
                     // ship is over the edge; let the back end deal with it
                     break;
                 }
                 cell = tableRow.cells[col];
             } else {
-                cell = table.rows[row].cells[col+i];
+                if(i == 4){
+                   cell = table.rows[row-1].cells[col+2];
+                } else {
+                   cell = table.rows[row].cells[col+i];
+                }
             }
             if (cell === undefined) {
                 // ship is over the edge; let the back end deal with it
