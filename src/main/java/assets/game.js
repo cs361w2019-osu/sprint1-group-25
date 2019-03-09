@@ -144,15 +144,17 @@ function place(size) {
             let cell;
             if(vertical) {
                 if(i == 4){
-                    let tableRow = table.rows[row+i-2];
+                    let tableRow = table.rows[row+2];
+                    cell = tableRow.cells[col+1];
                 } else {
                     let tableRow = table.rows[row+i];
+
+                    if (tableRow === undefined) {
+                        // ship is over the edge; let the back end deal with it
+                        break;
+                    }
+                    cell = tableRow.cells[col];
                 }
-                if (tableRow === undefined) {
-                    // ship is over the edge; let the back end deal with it
-                    break;
-                }
-                cell = tableRow.cells[col];
             } else {
                 if(i == 4){
                    cell = table.rows[row-1].cells[col+2];
@@ -186,9 +188,6 @@ function initGame() {
     });
     document.getElementById("place_submarine").addEventListener("click", function(e) {
         shipType = "SUBMARINE";
-        if ( isSubmerged ) {
-            isSubmerged = !isSubmerged;
-        };
        registerCellListener(place(5));
     });
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
