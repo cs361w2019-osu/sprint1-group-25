@@ -166,22 +166,22 @@ function initGame() {
     makeGrid(document.getElementById("opponent"), false);
     makeGrid(document.getElementById("player"), true);
     document.getElementById("place_minesweeper").addEventListener("click", function(e) {
-        shipType = "MINESWEEPER";
+       shipType = "MINESWEEPER";
        registerCellListener(place(2));
     });
     document.getElementById("place_destroyer").addEventListener("click", function(e) {
-        shipType = "DESTROYER";
+       shipType = "DESTROYER";
        registerCellListener(place(3));
     });
     document.getElementById("place_battleship").addEventListener("click", function(e) {
-        shipType = "BATTLESHIP";
+       shipType = "BATTLESHIP";
        registerCellListener(place(4));
     });
     document.getElementById("place_submarine").addEventListener("click", function(e) {
         shipType = "SUBMARINE";
         if ( isSubmerged ) {
             isSubmerged = !isSubmerged;
-        }
+        };
        registerCellListener(place(5));
     });
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
