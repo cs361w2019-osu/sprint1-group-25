@@ -50,6 +50,10 @@ body {
     display: none;
 }
 
+.submerge {
+    display: none;
+}
+
 .buttons-wrapper {
     clear: both;
     width: 100%;

@@ -13,34 +13,15 @@ public class Game {
     @JsonProperty private Board playersBoard = new Board();
     @JsonProperty private Board opponentsBoard = new Board();
 
-    /*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
-    public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-        boolean successful = playersBoard.placeShip(ship, x, y, isVertical);
+    public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
+        boolean successful = playersBoard.placeShip(ship, x, y, isVertical, isSubmerged);
         if (!successful)
             return false;
 
         boolean opponentPlacedSuccessfully;
         do {
-            opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical());
+            opponentPlacedSuccessfully = opponentsBoard.placeShip(ship, randRow(), randCol(), randVertical(), randSubmerged());
         } while (!opponentPlacedSuccessfully);
-
-        return true;
-    }
-
-    /*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
-    public boolean attack(int x, char  y) {
-        Result playerAttack = opponentsBoard.attack(x, y);
-        if (playerAttack.getResult() == INVALID) {
-            return false;
-       }
-        Result opponentAttackResult;
-        do {
-            opponentAttackResult = playersBoard.attack(randRow(), randCol());
-        } while(opponentAttackResult.getResult() == INVALID);
 
         return true;
     }
@@ -76,5 +57,13 @@ public class Game {
 
     private boolean randVertical() {
         return new Random().nextBoolean();
+    }
+
+    private boolean randSubmerged() {
+
+        // Disable RNG until ships are denied underwater placement
+        return false;
+
+        //return new Random().nextBoolean();
     }
 }

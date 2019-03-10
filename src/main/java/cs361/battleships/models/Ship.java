@@ -16,6 +16,7 @@ public class Ship {
 
 	@JsonProperty private String kind;
 	@JsonProperty private List<Square> occupiedSquares;
+	@JsonProperty private boolean submerged;
 	@JsonProperty private int size;
 	@JsonProperty protected int cq;
 	@JsonProperty protected int cqArmor;
@@ -27,6 +28,7 @@ public class Ship {
 	public Ship(String kind) {
 		this();
 		this.kind = kind;
+		this.submerged = false;
 		switch(kind) {
 			case "MINESWEEPER":
 				this.size = 2;
@@ -43,6 +45,10 @@ public class Ship {
 				this.cq = 2;
 				this.cqArmor = 1;
 				break;
+			case "SUBMARINE":
+				this.size = 5;
+				this.cq = 3;
+				this.cqArmor = 1;
 		}
 	}
 
@@ -50,13 +56,25 @@ public class Ship {
 		return occupiedSquares;
 	}
 
-	public void place(char col, int row, boolean isVertical) {
+	public void place(char col, int row, boolean isVertical, boolean isSubmerged) {
+		if ( isSubmerged ) {
+			this.submerged = true;
+		}
 		for (int i=0; i<size; i++) {
-			if (isVertical) {
-				occupiedSquares.add(new Square(row+i, col));
+			if ( i == 4 ) {
+				if (isVertical) {
+					occupiedSquares.add(new Square(row + 2, (char) (col + 1)));
+				} else {
+					occupiedSquares.add(new Square(row - 1, (char) (col + 2)));
+				}
 			} else {
-				occupiedSquares.add(new Square(row, (char) (col + i)));
+				if (isVertical) {
+					occupiedSquares.add(new Square(row + i, col));
+				} else {
+					occupiedSquares.add(new Square(row, (char) (col + i)));
+				}
 			}
+
 		}
 	}
 
@@ -97,7 +115,7 @@ public class Ship {
 		result.setShip(this);
 
 		// Check if square is ship's CQ
-		if ( isCq(attackedSquare) ) {
+		if ( isCq(attackedSquare ) ) {
 			if ( this.cqArmor > 0 ) {
 				this.cqArmor--;
 				result.setResult(AtackStatus.MISS);
@@ -149,9 +167,4 @@ public class Ship {
 		return kind + occupiedSquares.toString();
 	}
 
-
-	//public int getCqArmor() {return this.CQ_Armor;}
-	//public void hitCq() {this.CQ_Armor--;}
-	//public boolean getSunkCheck() {return this.SunkCheck;}
-	//public void setSunkCheck(boolean sinkIt) {this.SunkCheck = sinkIt;}
 }

@@ -16,9 +16,6 @@ public class Board {
 	@JsonProperty private boolean sonarEarned;
 	
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
 	public Board() {
 		ships = new ArrayList<>();
 		submarines = new ArrayList<>();
@@ -28,31 +25,44 @@ public class Board {
 		sonarEarned = false;
 	}
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
-	public boolean placeShip(Ship ship, int x, char y, boolean isVertical) {
-		if (ships.size() >= 3) {
+	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
+
+		// Check for max ship count on board, fail if max is hit
+		if ( ( ships.size() + submarines.size() ) >= 4 ) {
 			return false;
 		}
+
+		// Check for other ships of same type, fail if found
 		if (ships.stream().anyMatch(s -> s.getKind().equals(ship.getKind()))) {
 			return false;
 		}
+
+		// Create a new ship
 		final var placedShip = new Ship(ship.getKind());
-		placedShip.place(y, x, isVertical);
+
+		// Handle submarine case
+		if ( placedShip.getKind() == "SUBMARINE") {
+			placedShip.place(y, x, isVertical, isSubmerged);
+			submarines.add(placedShip);
+			return true;
+		}
+
+		// Place the ship on the board
+		placedShip.place(y, x, isVertical, false);
+
+		// Check if new ship overlaps others
 		if (ships.stream().anyMatch(s -> s.overlaps(placedShip))) {
 			return false;
 		}
+		// Check if new ship is off the board
 		if (placedShip.getOccupiedSquares().stream().anyMatch(s -> s.isOutOfBounds())) {
 			return false;
 		}
 		ships.add(placedShip);
 		return true;
+
 	}
 
-	/*
-	DO NOT change the signature of this method. It is used by the grading scripts.
-	 */
 	public Result attack(int x, char y) {
 		Result attackResult = attack(new Square(x, y));
 		attacks.add(attackResult);
@@ -75,12 +85,6 @@ public class Board {
 	}
 
 	private Result attack(Square s) {
-		// CHECKS TO SEE IF A SQUARE HAS PREVIOUSLY BEEN ATTACKED
-		//if (attacks.stream().anyMatch(r -> r.getLocation().equals(s))) {
-		//	var attackResult = new Result(s);
-		//	attackResult.setResult(AtackStatus.INVALID);
-		//	return attackResult;
-		//}
 		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
 		if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
