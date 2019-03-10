@@ -75,7 +75,7 @@ public class Board {
 		if ( laserEarned ) {
 
 			Result subAttackResult = attack( submarines, new Square(x, y) );
-			subAttackResult.setSubmerged();
+			subAttackResult.setSubmerged(true);
 			attacks.add(subAttackResult);
 
 			// Check if game is over
