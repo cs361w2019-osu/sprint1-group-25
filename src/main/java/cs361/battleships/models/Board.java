@@ -14,6 +14,7 @@ public class Board {
 	@JsonProperty private List<Result> sonarSquares;
 	@JsonProperty private int sonars;
 	@JsonProperty private boolean sonarEarned;
+	@JsonProperty private boolean laserEarned;
 	
 
 	public Board() {
@@ -23,6 +24,7 @@ public class Board {
 		sonarSquares = new ArrayList<>();
 		sonars = 1;
 		sonarEarned = false;
+		laserEarned = false;
 	}
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
@@ -64,32 +66,70 @@ public class Board {
 	}
 
 	public Result attack(int x, char y) {
-		Result attackResult = attack(new Square(x, y));
+
+		// Attack surface ships
+		Result attackResult = attack(ships, new Square(x, y) );
 		attacks.add(attackResult);
+
+		// Attack subsurface ships if laser has been earned
+		if ( laserEarned ) {
+
+			Result subAttackResult = attack( submarines, new Square(x, y) );
+			subAttackResult.setSubmerged(true);
+			attacks.add(subAttackResult);
+
+			// Check if game is over
+			if ( ships.stream().allMatch(ship -> ship.isSunk()) && submarines.stream().allMatch(ship -> ship.isSunk()) ) {
+
+				attackResult.setResult(AtackStatus.SURRENDER);
+				return attackResult;
+
+			// Return hit if anything is hit
+			} else if (
+				attackResult.getResult() == AtackStatus. HIT ||
+				attackResult.getResult() == AtackStatus. SUNK ||
+				subAttackResult.getResult() == AtackStatus.HIT ||
+				subAttackResult.getResult() == AtackStatus.SUNK
+			) {
+				attackResult.setResult(AtackStatus.HIT);
+			}
+		}
+
 		return attackResult;
 	}
 
 	public void sonar(int x, char y) {
+
 		this.sonars--;
+
 		for( int boxY = -2; boxY <= 2; boxY++ ) {
 			for( int boxX = -2; boxX <= 2; boxX++ ) {
+
 				if ( Math.abs(boxX) + Math.abs(boxY)  <= 2 ) {
+
 					Square s = new Square( (x + boxX), (char)((int)y + boxY) );
+
 					if (!s.isOutOfBounds()) {
+
 						Result attackResult = sonar(s);
 						sonarSquares.add(attackResult);
+
 					}
 				}
 			}
 		}
 	}
 
-	private Result attack(Square s) {
-		var shipsAtLocation = ships.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
-		if (shipsAtLocation.size() == 0) {
+	private Result attack(List<Ship> shipList, Square s) {
+
+		var shipsAtLocation = shipList.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
+	
+    if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
 			return attackResult;
 		}
+
+
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
 		if (attackResult.getResult() == AtackStatus.SUNK) {
@@ -111,9 +151,7 @@ public class Board {
 			if ( this.sonarEarned == false ) {
 				this.sonars++;
 				this.sonarEarned = true;
-			}
-			if (ships.stream().allMatch(ship -> ship.isSunk())) {
-				attackResult.setResult(AtackStatus.SURRENDER);
+				this.laserEarned = true;
 			}
 		}
 		return attackResult;
