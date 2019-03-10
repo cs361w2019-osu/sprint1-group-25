@@ -123,7 +123,6 @@ public class Ship {
 				this.getOccupiedSquares().forEach(s -> s.hit());
 				result.setResult(AtackStatus.SUNK);
 			}
-			System.out.print(result.getResult());
 			return result;
 		} else {
 			attackedSquare.hit();
