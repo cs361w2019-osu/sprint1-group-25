@@ -9,6 +9,11 @@ public class AttackGameAction {
     @JsonProperty private int x;
     @JsonProperty private char y;
     @JsonProperty private boolean isSonar;
+    @JsonProperty private boolean isDirNorth;
+    @JsonProperty private boolean isDirEast;
+    @JsonProperty private boolean isDirSouth;
+    @JsonProperty private boolean isDirWest;
+
 
     public Game getGame() {
         return game;
@@ -26,4 +31,11 @@ public class AttackGameAction {
         return isSonar;
     }
 
+    public boolean isDirNorth() {return isDirNorth; }
+
+    public boolean isDirEast() { return isDirEast; }
+
+    public boolean isDirSouth() { return isDirSouth; }
+
+    public boolean isDirWest() { return isDirWest; }
 }
