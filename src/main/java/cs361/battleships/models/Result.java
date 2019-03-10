@@ -43,7 +43,7 @@ public class Result {
 		return this.submerged;
 	}
 
-	public void setSubmerged() {
-		this.submerged = true;
+	public void setSubmerged(boolean submerged) {
+		this.submerged = submerged;
 	}
 }
