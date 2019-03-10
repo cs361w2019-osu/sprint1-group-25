@@ -91,6 +91,28 @@ button:active {
     text-align: center;
 }
 
+#move-wrapper {
+    text-align: center;
+    display: none;
+}
+
+#move-wrapper button {
+    width: 35px;
+    height: 35px;
+}
+
+#move-wrapper p {
+    font-size: 17px;
+}
+
+#move-wrapper .east {
+    margin-left: 30px;
+}
+
+#move-wrapper .south {
+    margin-left: -4px;
+}
+
 .sonar {
     margin-top: 10px;
     background-color: #999999;

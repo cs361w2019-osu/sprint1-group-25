@@ -118,6 +118,7 @@ function cellClick() {
                 registerCellListener((e) => {});
                 document.getElementsByClassName("buttons")[0].style.display = "none";
                 document.getElementsByClassName("enemyboard")[0].style.display = "block";
+                document.getElementById("move-wrapper").style.display = "block";
             }
         });
     } else {
