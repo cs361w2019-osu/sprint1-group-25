@@ -15,10 +15,11 @@ public class Routes implements ApplicationRoutes {
         router.GET().route("/game").with(ApplicationController::newGame);
         router.POST().route("/place").with(ApplicationController::placeShip);
         router.POST().route("/attack").with(ApplicationController::attack);
+        router.POST().route("/move").with(ApplicationController::moveFleet);
 
         ///////////////////////////////////////////////////////////////////////
         // Assets (pictures / javascript)
-        ///////////////////////////////////////////////////////////////////////    
+        ///////////////////////////////////////////////////////////////////////
         router.GET().route("/assets/webjars/{fileName: .*}").with(AssetsController::serveWebJars);
         router.GET().route("/assets/{fileName: .*}").with(AssetsController::serveStatic);
     }

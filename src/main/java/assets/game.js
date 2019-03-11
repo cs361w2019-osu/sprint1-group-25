@@ -5,6 +5,8 @@ var shipType;
 var vertical;
 var submerged;
 var isSonar;
+var isDirection = false;
+var direction = '';
 
 function makeGrid(table, isPlayer) {
     for (i=0; i<10; i++) {
@@ -193,6 +195,13 @@ function place(size) {
     }
 }
 
+function moveFleet(direction) {
+    sendXhr("POST", "/move", {game:game, direction: direction}, function(data) {
+        game = data;
+        redrawGrid();
+    });
+}
+
 function initGame() {
 
     makeGrid(document.getElementById("opponent"), false);
@@ -222,6 +231,19 @@ function initGame() {
     document.getElementsByClassName("sonar")[0].addEventListener("click", function(e) {
         isSonar = !isSonar;
         document.getElementById("sonar-wrapper").classList.toggle("sonar-on");
+    });
+
+    document.getElementsByClassName("north")[0].addEventListener("click", function(e) {
+        moveFleet('n');
+    });
+    document.getElementsByClassName("east")[0].addEventListener("click", function(e) {
+        moveFleet('e');
+    });
+    document.getElementsByClassName("south")[0].addEventListener("click", function(e) {
+        moveFleet('s');
+    });
+    document.getElementsByClassName("west")[0].addEventListener("click", function(e) {
+        moveFleet('w');
     });
 
     sendXhr("GET", "/game", {}, function(data) {
