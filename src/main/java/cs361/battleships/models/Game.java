@@ -47,8 +47,8 @@ public class Game {
     }
 
     public void moveFleet(char direction) {
-        System.out.println(direction);
-        // playerboard.moveFleet(direction)
+        System.out.println("ahhhh");
+        playersBoard.moveFleet(direction);
     }
 
     private char randCol() {

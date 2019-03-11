@@ -16,7 +16,7 @@ public class Board {
 	@JsonProperty private int sinkCount;
 	@JsonProperty private boolean sonarEarned;
 	@JsonProperty private boolean laserEarned;
-	
+
 
 	public Board() {
 		ships = new ArrayList<>();
@@ -122,10 +122,31 @@ public class Board {
 		}
 	}
 
+	public void moveFleet(char direction) {
+		int y = 0;
+		int x = 0;
+		if (direction == 'n') {
+			y = 1;
+		}
+		if (direction == 'e') {
+			x = 1;
+		}
+		if (direction == 's') {
+			y = -1;
+		}
+		if (direction == 'w') {
+			x = -1;
+		}
+		for (int i = 0; i < ships.size(); i++) {
+			ships.get(i).move(x,y);
+		}
+	}
+
+
 	private Result attack(List<Ship> shipList, Square s) {
 
 		var shipsAtLocation = shipList.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
-	
+
     if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
 			return attackResult;

@@ -32,7 +32,6 @@ public class Square {
 		return row;
 	}
 
-
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof Square) {
