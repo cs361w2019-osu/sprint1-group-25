@@ -39,4 +39,10 @@ public class ApplicationController {
             return Results.badRequest();
         }
     }
+
+    public Result moveFleet(Context context, MoveGameAction g) {
+        Game game = g.getGame();
+        game.moveFleet(g.getDirection());
+        return Results.json().render(game);
+    }
 }

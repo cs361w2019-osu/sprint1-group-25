@@ -13,9 +13,10 @@ public class Board {
 	@JsonProperty private List<Result> attacks;
 	@JsonProperty private List<Result> sonarSquares;
 	@JsonProperty private int sonars;
+	@JsonProperty private int sinkCount;
 	@JsonProperty private boolean sonarEarned;
 	@JsonProperty private boolean laserEarned;
-	
+
 
 	public Board() {
 		ships = new ArrayList<>();
@@ -23,8 +24,7 @@ public class Board {
 		attacks = new ArrayList<>();
 		sonarSquares = new ArrayList<>();
 		sonars = 1;
-		sonarEarned = false;
-		laserEarned = false;
+		sinkCount=0;
 	}
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
@@ -71,8 +71,8 @@ public class Board {
 		Result attackResult = attack(ships, new Square(x, y) );
 		attacks.add(attackResult);
 
-		// Attack subsurface ships if laser has been earned
-		if ( laserEarned ) {
+		// Attack subsurface ships if laser has been earned (after 1 sink)
+		if ( this.sinkCount > 0 ) {
 
 			Result subAttackResult = attack( submarines, new Square(x, y) );
 			subAttackResult.setSubmerged(true);
@@ -120,18 +120,55 @@ public class Board {
 		}
 	}
 
+	public void moveFleet(char direction) {
+		int y = 0;
+		int x = 0;
+		if (direction == 'n') {
+			y = -1;
+		}
+		if (direction == 'e') {
+			x = 1;
+		}
+		if (direction == 's') {
+			y = 1;
+		}
+		if (direction == 'w') {
+			x = -1;
+		}
+		for (int i = 0; i < ships.size(); i++) {
+			if (canMove(i,x,y)) {
+				ships.get(i).move(x,y);
+			}
+		}
+	}
+
+	private boolean canMove(int index, int x, int y) {
+		for (int i = 0; i < ships.size(); i++) {
+			if (i != index) {
+				for (int j = 0; j < ships.get(index).getOccupiedSquares().size(); j++) {
+					for (int k = 0; k < ships.get(i).getOccupiedSquares().size(); k++) {
+						if (ships.get(index).getOccupiedSquares().get(j).getRow() + y == ships.get(i).getOccupiedSquares().get(k).getRow() && (char)((int)ships.get(index).getOccupiedSquares().get(j).getColumn() + x) == ships.get(i).getOccupiedSquares().get(k).getColumn()) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	private Result attack(List<Ship> shipList, Square s) {
 
 		var shipsAtLocation = shipList.stream().filter(ship -> ship.isAtLocation(s)).collect(Collectors.toList());
-	
+
     if (shipsAtLocation.size() == 0) {
 			var attackResult = new Result(s);
 			return attackResult;
 		}
 
-
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
+
 		if (attackResult.getResult() == AtackStatus.SUNK) {
 			for ( Square shipSquare : hitShip.getOccupiedSquares() ) {
 				boolean squareFound = false;
@@ -148,11 +185,11 @@ public class Board {
 				}
 			}
 
-			if ( this.sonarEarned == false ) {
+			if ( sinkCount == 0 ) {
 				this.sonars++;
-				this.sonarEarned = true;
-				this.laserEarned = true;
 			}
+
+			this.sinkCount++;
 		}
 		return attackResult;
 	}

@@ -78,6 +78,20 @@ public class Ship {
 		}
 	}
 
+	public void move(int x, int y) {
+		for (int i = 0; i < occupiedSquares.size(); i++) {
+			if (occupiedSquares.get(i).getRow() + y > 10 || occupiedSquares.get(i).getRow() + y < 1) {
+				return;
+			}
+			if ((char)((int)occupiedSquares.get(i).getColumn() + x) > 'J' || (char)((int)occupiedSquares.get(i).getColumn() + x) < 'A') {
+				return;
+			}
+			Square s = new Square(occupiedSquares.get(i).getRow() + y, (char)((int)occupiedSquares.get(i).getColumn() + x));
+			occupiedSquares.set(i, s);
+		}
+
+	}
+
 	public boolean overlaps(Ship other) {
 		Set<Square> thisSquares = Set.copyOf(getOccupiedSquares());
 		Set<Square> otherSquares = Set.copyOf(other.getOccupiedSquares());
