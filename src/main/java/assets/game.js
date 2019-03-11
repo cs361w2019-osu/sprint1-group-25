@@ -196,7 +196,6 @@ function place(size) {
 }
 
 function moveFleet(direction) {
-    console.log("asdfs") 
     sendXhr("POST", "/move", {game:game, direction: direction}, function(data) {
         game = data;
         redrawGrid();

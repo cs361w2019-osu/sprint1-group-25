@@ -47,7 +47,6 @@ public class Game {
     }
 
     public void moveFleet(char direction) {
-        System.out.println("ahhhh");
         playersBoard.moveFleet(direction);
     }
 
