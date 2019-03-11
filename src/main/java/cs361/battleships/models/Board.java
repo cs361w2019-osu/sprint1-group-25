@@ -14,8 +14,6 @@ public class Board {
 	@JsonProperty private List<Result> sonarSquares;
 	@JsonProperty private int sonars;
 	@JsonProperty private int sinkCount;
-	@JsonProperty private boolean sonarEarned;
-	@JsonProperty private boolean laserEarned;
 	
 
 	public Board() {
@@ -25,8 +23,6 @@ public class Board {
 		sonarSquares = new ArrayList<>();
 		sonars = 1;
 		sinkCount=0;
-		sonarEarned = false;
-		laserEarned = false;
 	}
 
 	public boolean placeShip(Ship ship, int x, char y, boolean isVertical, boolean isSubmerged) {
@@ -73,8 +69,8 @@ public class Board {
 		Result attackResult = attack(ships, new Square(x, y) );
 		attacks.add(attackResult);
 
-		// Attack subsurface ships if laser has been earned
-		if ( laserEarned ) {
+		// Attack subsurface ships if laser has been earned (after 1 sink)
+		if ( this.sinkCount > 0 ) {
 
 			Result subAttackResult = attack( submarines, new Square(x, y) );
 			subAttackResult.setSubmerged(true);
@@ -131,9 +127,9 @@ public class Board {
 			return attackResult;
 		}
 
-
 		var hitShip = shipsAtLocation.get(0);
 		var attackResult = hitShip.attack(s.getRow(), s.getColumn());
+
 		if (attackResult.getResult() == AtackStatus.SUNK) {
 			for ( Square shipSquare : hitShip.getOccupiedSquares() ) {
 				boolean squareFound = false;
@@ -150,10 +146,8 @@ public class Board {
 				}
 			}
 
-			if ( this.sonarEarned == false ) {
+			if ( sinkCount == 0 ) {
 				this.sonars++;
-				this.sonarEarned = true;
-				this.laserEarned = true;
 			}
 
 			this.sinkCount++;
