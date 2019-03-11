@@ -26,6 +26,22 @@ public class Game {
         return true;
     }
 
+    public boolean moveFleet(char direction){
+        if(direction=='n'){
+
+        }
+        else if( direction=='e'){
+
+        }
+        else if ( direction=='s'){
+
+        }
+        else if( direction == 'w'){
+
+        }
+
+    }
+
     public boolean attack(int x, char  y, boolean isSonar) {
         if (isSonar && opponentsBoard.getSonars() > 0) {
             opponentsBoard.sonar(x, y);

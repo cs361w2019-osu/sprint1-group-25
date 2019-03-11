@@ -13,6 +13,7 @@ public class AttackGameAction {
     @JsonProperty private boolean isDirEast;
     @JsonProperty private boolean isDirSouth;
     @JsonProperty private boolean isDirWest;
+    @JsonProperty private char isDirection;
 
 
     public Game getGame() {
@@ -38,4 +39,6 @@ public class AttackGameAction {
     public boolean isDirSouth() { return isDirSouth; }
 
     public boolean isDirWest() { return isDirWest; }
+
+    public char getDirection() {return isDirection; }
 }

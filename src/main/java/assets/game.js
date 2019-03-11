@@ -224,6 +224,23 @@ function initGame() {
         document.getElementById("sonar-wrapper").classList.toggle("sonar-on");
     });
 
+    document.getElementsByClassName("north")[0].addEventListener("click", function(e)){
+        isDirection = 'n';
+        document.getElementById("move-wrapper").classList.toggle()
+    }
+    document.getElementsByClassName("east")[0].addEventListener("click", function(e)){
+            isDirection = 'e';
+            document.getElementById("move-wrapper").classList.toggle()
+        }
+    document.getElementsByClassName("south")[0].addEventListener("click", function(e)){
+             isDirection = 's';
+             document.getElementById("move-wrapper").classList.toggle()
+         }
+    document.getElementsByClassName("west")[0].addEventListener("click", function(e)){
+            isDirection = 'w';
+            document.getElementById("move-wrapper").classList.toggle()
+        }
+
     sendXhr("GET", "/game", {}, function(data) {
         game = data;
     });
