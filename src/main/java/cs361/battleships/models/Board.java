@@ -124,22 +124,38 @@ public class Board {
 		int y = 0;
 		int x = 0;
 		if (direction == 'n') {
-			y = 1;
+			y = -1;
 		}
 		if (direction == 'e') {
 			x = 1;
 		}
 		if (direction == 's') {
-			y = -1;
+			y = 1;
 		}
 		if (direction == 'w') {
 			x = -1;
 		}
 		for (int i = 0; i < ships.size(); i++) {
-			ships.get(i).move(x,y);
+			if (canMove(i,x,y)) {
+				ships.get(i).move(x,y);
+			}
 		}
 	}
 
+	private boolean canMove(int index, int x, int y) {
+		for (int i = 0; i < ships.size(); i++) {
+			if (i != index) {
+				for (int j = 0; j < ships.get(index).getOccupiedSquares().size(); j++) {
+					for (int k = 0; k < ships.get(i).getOccupiedSquares().size(); k++) {
+						if (ships.get(index).getOccupiedSquares().get(j).getRow() + y == ships.get(i).getOccupiedSquares().get(k).getRow() && (char)((int)ships.get(index).getOccupiedSquares().get(j).getColumn() + x) == ships.get(i).getOccupiedSquares().get(k).getColumn()) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
 
 	private Result attack(List<Ship> shipList, Square s) {
 
