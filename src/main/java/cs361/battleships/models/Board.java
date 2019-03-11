@@ -13,6 +13,7 @@ public class Board {
 	@JsonProperty private List<Result> attacks;
 	@JsonProperty private List<Result> sonarSquares;
 	@JsonProperty private int sonars;
+	@JsonProperty private int sinkCount;
 	@JsonProperty private boolean sonarEarned;
 	@JsonProperty private boolean laserEarned;
 	
@@ -23,6 +24,7 @@ public class Board {
 		attacks = new ArrayList<>();
 		sonarSquares = new ArrayList<>();
 		sonars = 1;
+		sinkCount=0;
 		sonarEarned = false;
 		laserEarned = false;
 	}
@@ -153,6 +155,8 @@ public class Board {
 				this.sonarEarned = true;
 				this.laserEarned = true;
 			}
+
+			this.sinkCount++;
 		}
 		return attackResult;
 	}
